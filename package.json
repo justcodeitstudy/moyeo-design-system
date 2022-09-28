@@ -9,13 +9,13 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.6"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "rollup -c",
-    "build:types": "tsc --emitDeclarationOnly"
+    "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly"
   },
   "eslintConfig": {
     "extends": [
@@ -46,14 +46,11 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^6.5.12",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-docs": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
-    "@storybook/addon-interactions": "^6.5.12",
-    "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.5.12",
-    "@storybook/addon-viewport": "^6.5.12",
+    "@storybook/addon-storysource": "^6.5.12",
     "@storybook/builder-webpack5": "^6.5.12",
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/node-logger": "^6.5.12",
@@ -68,6 +65,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/styled-components": "^5.1.26",
     "babel-plugin-named-exports-order": "^0.0.2",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
@@ -80,12 +78,12 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-url": "^3.0.1",
+    "styled-components": "^5.3.6",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "webpack": "^5.74.0"
   },
   "main": "index.js",
   "repository": "https://github.com/justcodeitstudy/moyeo-design-system.git",
-  "author": "WONBEEN NA <nwbnwb@naver.com>",
   "license": "MIT"
 }
