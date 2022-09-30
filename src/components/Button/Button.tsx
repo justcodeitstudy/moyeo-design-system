@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
