@@ -1,19 +1,22 @@
+import { Meta, Story } from "@storybook/react";
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Button } from "../../../components";
+import Button, { ButtonProps } from "../../../components/Button";
+import { parameters } from "../../defaultMetaParams";
 
 export default {
   title: "Components/Button",
   component: Button,
-} as ComponentMeta<typeof Button>;
+  parameters,
+} as Meta;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: Story<ButtonProps> = (args: ButtonProps) => (
+  <Button {...args}>버튼</Button>
+);
 
-export const Primary = Template.bind({});
-Primary.args = { label: "Primary", backgroundColor: "#12D4FF" };
-
-export const Secondary = Template.bind({});
-Secondary.args = { label: "Secondary", backgroundColor: "red" };
-
-export const Tertiary = Template.bind({});
-Tertiary.args = { label: "Tertiary" };
+export const Basic: Story<ButtonProps> = (args: ButtonProps) => (
+  <Template {...args} />
+);
+Basic.args = {
+  size: "medium",
+  status: "basic",
+};
