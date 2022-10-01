@@ -16,10 +16,12 @@ export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     expanded: true,
+    sort: "requiredFirst",
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
     },
   },
+  exclude: ["ref", "theme", "as", "forwardedAs"],
   viewMode: "docs",
 };
