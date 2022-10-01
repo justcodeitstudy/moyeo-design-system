@@ -9,13 +9,10 @@ export default {
   parameters,
 } as Meta;
 
-const Template: Story<ButtonProps> = (args: ButtonProps) => (
-  <Button {...args}>버튼</Button>
-);
+const Template: Story<ButtonProps> = (args) => <Button {...args}>버튼</Button>;
 
-export const Basic: Story<ButtonProps> = (args: ButtonProps) => (
-  <Template {...args} />
-);
+export const Basic: Story<ButtonProps> = (args) => <Template {...args} />;
+
 Basic.args = {
   size: "medium",
   status: "basic",
