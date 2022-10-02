@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode;
-}
+export type CardProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const Card = ({ children, ...rest }: CardProps) => {
   return <StyledCard {...rest}>{children}</StyledCard>;
@@ -24,6 +22,7 @@ const StyledCard = styled("div")`
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+  outline: 1px solid transparent;
   transition: outline 0.2s;
 
   &:hover {
@@ -35,7 +34,7 @@ const StyledCard = styled("div")`
     min-width: 992px;
   }
 
-  @media screen and (min-width: 320px) {
+  @media screen and (min-width: 375px) {
     min-width: 343px;
   }
 `;
