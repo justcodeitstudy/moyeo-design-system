@@ -1,100 +1,101 @@
 import React, { ButtonHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 
+type Size = "medium" | "large";
+type Color = "primary" | "general" | "success" | "warning" | "danger";
+type Variants = "default" | "outlined" | "text";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
-  status?: Status;
+  color?: Color;
+  variants?: Variants;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-type Size = "medium" | "large";
+// const generateStatusStyle = (status?: Status) => {
+//   switch (status) {
+//     case "primary":
+//       return css`
+//         color: #ffffff;
+//         background: #12d4ff;
 
-type Status = "primary" | "secondary" | "basic" | "danger";
+//         &:hover:enabled {
+//           background: #6be4ff;
+//         }
 
-const generateStatusStyle = (status?: Status) => {
-  switch (status) {
-    case "primary":
-      return css`
-        color: #ffffff;
-        background: #12d4ff;
+//         &:active:enabled {
+//           background: #00b1e9;
+//         }
+//       `;
+//     case "secondary":
+//       return css`
+//         color: #444444;
+//         background: #ffffff;
+//         border: 1px solid #d9d9d9;
 
-        &:hover:enabled {
-          background: #6be4ff;
-        }
+//         &:hover:enabled {
+//           color: #6be4ff;
+//           background: #ffffff;
+//           border: 1px solid #6be4ff;
+//         }
 
-        &:active:enabled {
-          background: #00b1e9;
-        }
-      `;
-    case "secondary":
-      return css`
-        color: #444444;
-        background: #ffffff;
-        border: 1px solid #d9d9d9;
+//         &:active:enabled {
+//           font-weight: 500;
+//           color: #00b1e9;
+//           background: #ffffff;
+//           border: 1px solid #00b1e9;
+//         }
+//       `;
+//     case "danger":
+//       return css`
+//         color: #ffffff;
+//         background: #ff3d3d;
 
-        &:hover:enabled {
-          color: #6be4ff;
-          background: #ffffff;
-          border: 1px solid #6be4ff;
-        }
+//         &:hover:enabled {
+//           background: #ff8383;
+//         }
 
-        &:active:enabled {
-          font-weight: 500;
-          color: #00b1e9;
-          background: #ffffff;
-          border: 1px solid #00b1e9;
-        }
-      `;
-    case "danger":
-      return css`
-        color: #ffffff;
-        background: #ff3d3d;
+//         &:active:enabled {
+//           background: #ea2222;
+//         }
+//       `;
+//     case "basic":
+//     default:
+//       return css`
+//         color: #444444;
+//         background: none;
 
-        &:hover:enabled {
-          background: #ff8383;
-        }
+//         &:hover:enabled {
+//           background: #fafafa;
+//         }
 
-        &:active:enabled {
-          background: #ea2222;
-        }
-      `;
-    case "basic":
-    default:
-      return css`
-        color: #444444;
-        background: none;
+//         &:active:enabled {
+//           background: #d9d9d9;
+//         }
+//       `;
+//   }
+// };
 
-        &:hover:enabled {
-          background: #fafafa;
-        }
+// const generateSizedStyle = (size?: Size) => {
+//   switch (size) {
+//     case "large":
+//       return css`
+//         height: 38px;
+//         padding: 12px 24px;
+//       `;
+//     case "medium":
+//     default:
+//       return css`
+//         height: 30px;
+//         padding: 8px 16px;
+//       `;
+//   }
+// };
 
-        &:active:enabled {
-          background: #d9d9d9;
-        }
-      `;
-  }
-};
-
-const generateSizedStyle = (size?: Size) => {
-  switch (size) {
-    case "large":
-      return css`
-        height: 38px;
-        padding: 12px 24px;
-      `;
-    case "medium":
-    default:
-      return css`
-        height: 30px;
-        padding: 8px 16px;
-      `;
-  }
-};
-
-const Button = ({
+export const Button = ({
   size = "medium",
-  status = "basic",
+  color = "primary",
+  variants = "default",
   disabled = false,
   onClick,
   children,
@@ -103,7 +104,8 @@ const Button = ({
   return (
     <StyledButton
       size={size}
-      status={status}
+      color={color}
+      variants={variants}
       disabled={disabled}
       onClick={onClick}
       {...rest}
@@ -112,8 +114,6 @@ const Button = ({
     </StyledButton>
   );
 };
-
-export default Button;
 
 const StyledButton = styled.button<ButtonProps>`
   height: 30px;
@@ -125,7 +125,4 @@ const StyledButton = styled.button<ButtonProps>`
     color: #ffffff;
     background: #e5e5e5;
   }
-
-  ${({ size }) => generateSizedStyle(size)};
-  ${({ status }) => generateStatusStyle(status)}
 `;
