@@ -1,63 +1,73 @@
-import React, { ChangeEventHandler, InputHTMLAttributes } from "react";
+import React, {
+  ChangeEventHandler,
+  forwardRef,
+  InputHTMLAttributes,
+  ReactNode,
+} from "react";
 import styled from "styled-components";
 import { CheckboxIcon } from "../../Icon/svg";
+import { getCheckboxSize, getLabelSize } from "./style";
 
-type Size = "medium" | "large" | "small";
+type Ref = HTMLInputElement;
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  boxsize: Size;
+  boxsize?: Size;
+  name?: string;
+  label?: ReactNode;
   checked?: boolean;
   disabled?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement> & (() => void);
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-const getCheckboxSize = (boxSize: Size) => {
-  const checkbox = {
-    medium: { width: 24, height: 24 },
-    large: { width: 28, height: 28 },
-    small: { width: 20, height: 20 },
-  };
+const Checkbox = forwardRef<Ref, CheckboxProps>(
+  (
+    { label, boxsize = "medium", checked, disabled, name, ...rest },
+    inputRef,
+  ) => {
+    const props = { boxsize, checked, disabled };
 
-  const icon = {
-    medium: { width: 18, height: 14 },
-    large: { width: 20, height: 16 },
-    small: { width: 14, height: 12 },
-  };
-
-  return {
-    checkbox: checkbox[boxSize],
-    icon: icon[boxSize],
-  };
-};
-
-const Checkbox = ({ boxsize, checked, disabled, ...rest }: CheckboxProps) => {
-  const props = { boxsize, checked, disabled };
-
-  return (
-    <StyledLabel htmlFor={rest.id}>
-      <StyledCheckbox type="checkbox" {...props} {...rest} />
-      <StyledCheckboxIcon {...props} />
-    </StyledLabel>
-  );
-};
+    return (
+      <StyledLabel htmlFor={name}>
+        <StyledInputWrap>
+          <StyledCheckbox
+            type="checkbox"
+            name={name}
+            ref={inputRef}
+            aria-checked={checked}
+            {...props}
+            {...rest}
+          />
+          {checked && <StyledCheckboxIcon aria-hidden {...props} />}
+        </StyledInputWrap>
+        {label && <Label {...props}>{label}</Label>}
+      </StyledLabel>
+    );
+  },
+);
 
 export default Checkbox;
 
 const StyledLabel = styled.label`
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+`;
 
+const StyledInputWrap = styled.span`
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 `;
 
 const StyledCheckbox = styled.input<CheckboxProps>`
-  ${({ boxsize }) => getCheckboxSize(boxsize).checkbox};
+  ${({ boxsize }) => getCheckboxSize(boxsize || "medium").checkbox};
 
   border: 2px solid #afafaf;
   border-radius: 4px;
 
   appearance: none;
+
+  cursor: pointer;
 
   &:checked {
     background: ${({ theme }) => theme.colors.primary};
@@ -66,6 +76,7 @@ const StyledCheckbox = styled.input<CheckboxProps>`
 
   &:disabled {
     border-color: #d9d9d9;
+    cursor: not-allowed;
   }
 
   &:checked:disabled {
@@ -75,14 +86,19 @@ const StyledCheckbox = styled.input<CheckboxProps>`
 
 const StyledCheckboxIcon = styled(CheckboxIcon)<CheckboxProps>`
   position: absolute;
+  pointer-events: none;
 
-  ${({ boxsize }) => getCheckboxSize(boxsize).icon};
-
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  ${({ boxsize }) => getCheckboxSize(boxsize || "medium").icon};
 
   & path {
     stroke: ${(props) =>
       (!props.checked && props.disabled && "#fff") ||
       (props.disabled && "#888")};
   }
+`;
+
+const Label = styled.span<CheckboxProps>`
+  ${({ boxsize }) => getLabelSize(boxsize || "medium")};
+
+  color: #4d4d4d;
 `;
