@@ -35,7 +35,7 @@ const colors = {
     "800": "#696969",
     "900": "#565656",
   },
-  typography: {
+  text: {
     title: "#000000",
     primary: "#444444",
     secondary: "#888888",
