@@ -14,9 +14,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value === "") {
-        return;
-      }
       onChange?.(e);
     };
 

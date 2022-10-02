@@ -11,6 +11,7 @@ const Template: Story<InputProps> = (args) => {
   const [value, setValue] = useState("");
   return (
     <Input
+      {...args}
       label={args.label}
       placeholder={args.placeholder}
       message={args.message}
@@ -18,7 +19,6 @@ const Template: Story<InputProps> = (args) => {
       onChange={(e) => {
         setValue(e.target.value);
       }}
-      {...args}
     />
   );
 };
