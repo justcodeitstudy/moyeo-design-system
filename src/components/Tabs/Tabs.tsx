@@ -4,7 +4,7 @@ import styled from "styled-components";
 export type TabsProps = HtmlHTMLAttributes<HTMLUListElement>;
 
 export const Tabs = ({ children, ...rest }: TabsProps) => {
-  return <StyledTab {...rest}>{children}</StyledTab>;
+  return <StyledTabs {...rest}>{children}</StyledTabs>;
 };
 
 interface ItemProps extends HtmlHTMLAttributes<HTMLLIElement> {
@@ -26,21 +26,21 @@ export const Item = ({
   }, [value, onTabSelect]);
 
   return (
-    <StyledTabItem selected={selected} onClick={handleClick}>
+    <StyledItem selected={selected} onClick={handleClick}>
       {children}
-    </StyledTabItem>
+    </StyledItem>
   );
 };
 
 Tabs.Item = Item;
 
-const StyledTab = styled.ul`
+const StyledTabs = styled.ul`
   padding: 0;
   margin: 0;
   flex: 1;
 `;
 
-const StyledTabItem = styled.li<ItemProps>`
+const StyledItem = styled.li<ItemProps>`
   display: inline-block;
   padding: 14px 20px;
   font-weight: 500;
