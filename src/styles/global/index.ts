@@ -1,9 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
-  button {
-    border: 0;
-  }
+  ${reset}
 `;
 
 export default GlobalStyle;
