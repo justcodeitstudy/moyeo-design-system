@@ -4,10 +4,14 @@ import styled from "styled-components";
 export type TabsProps = HtmlHTMLAttributes<HTMLUListElement>;
 
 export const Tabs = ({ children, ...rest }: TabsProps) => {
-  return <StyledTabs {...rest}>{children}</StyledTabs>;
+  return (
+    <StyledTabs role="tab" {...rest}>
+      {children}
+    </StyledTabs>
+  );
 };
 
-interface ItemProps extends HtmlHTMLAttributes<HTMLLIElement> {
+interface TabsItemProps extends HtmlHTMLAttributes<HTMLLIElement> {
   value?: string;
   selected?: boolean;
   onTabSelect?: (value: string) => void;
@@ -18,7 +22,7 @@ export const Item = ({
   selected = false,
   children,
   onTabSelect,
-}: ItemProps) => {
+}: TabsItemProps) => {
   const handleClick = useCallback(() => {
     if (onTabSelect && value) {
       onTabSelect(value);
@@ -26,7 +30,12 @@ export const Item = ({
   }, [value, onTabSelect]);
 
   return (
-    <StyledItem selected={selected} onClick={handleClick}>
+    <StyledItem
+      role="tablist"
+      aria-selected={selected}
+      selected={selected}
+      onClick={handleClick}
+    >
       {children}
     </StyledItem>
   );
@@ -40,7 +49,7 @@ const StyledTabs = styled.ul`
   flex: 1;
 `;
 
-const StyledItem = styled.li<ItemProps>`
+const StyledItem = styled.li<TabsItemProps>`
   display: inline-block;
   padding: 14px 20px;
   font-weight: 500;
