@@ -46,28 +46,28 @@ const StyledInputContainer = styled("div")`
 const StyledInput = styled("input")`
   outline: none;
   width: 100%;
-  border: 1px solid #9e9e9e;
+  border: 1px solid ${({ theme }) => theme.colors.general[600]};
   padding: 12px 16px;
   border-radius: 6px;
   transition: border 0.2s ease-in-out;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   ::placeholder {
-    color: #bfbfbf;
+    color: ${({ theme }) => theme.colors.black[200]};
   }
 
-  ${({ disabled }) =>
+  ${({ theme, disabled }) =>
     disabled
       ? `
-    background-color: ##F7F7F7;  
+    background-color: ${theme.colors.general[100]};  
     `
       : `
     &:active, &:focus {
-      border 1px solid #05B7DE;
+      border 1px solid ${theme.colors.primary[600]};
     }
   
     &:hover {
-      border: 1px solid #9beafc;
+      border: 1px solid ${theme.colors.primary[300]};
     }
   `}
 `;
@@ -76,16 +76,14 @@ const StyledDescriptionText = styled("caption")`
   display: flex;
   align-items: center;
   margin: 6px 0 0 2px;
-  font-size: 12px;
-  line-height: 20px;
-  color: #999999;
+  ${({ theme }) => theme.typography.xs};
+  color: ${({ theme }) => theme.colors.black[300]};
 `;
 
 const StyledLabelText = styled("label")`
   display: flex;
   align-items: center;
   margin: 0 0 6px 2px;
-  color: #4d4d4d;
-  font-size: 14px;
-  line-height: 22px;
+  color: ${({ theme }) => theme.colors.black[400]};
+  ${({ theme }) => theme.typography.sm};
 `;
