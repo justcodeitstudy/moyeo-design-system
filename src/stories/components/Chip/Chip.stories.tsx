@@ -43,13 +43,12 @@ export const Basic: Story<ChipProps> = () => {
       </Wrapper>
       <Wrapper>
         {ChipItem.map((props, index) => (
-          <Chip key={index} {...props} isRounded />
+          <Chip key={index} {...props} variants="rounded" />
         ))}
       </Wrapper>
     </>
   );
 };
-Basic.parameters = { controls: { disable: true } };
 
 const Wrapper = styled.div`
   display: flex;

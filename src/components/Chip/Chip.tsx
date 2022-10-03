@@ -2,39 +2,28 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 type Status = "basic" | "active" | "danger" | "warning";
+type Variants = "pill" | "rounded";
 
 export interface ChipProps {
-  tag?: ReactNode;
-  label?: string;
   status: Status;
-  isRounded?: boolean;
+  adornments?: ReactNode;
+  label?: string;
+  variants?: Variants;
   onDelete?: (label: string) => void;
 }
 
-const getBackgroundColor = (status: Status) => {
-  // TODO: Global Color 로 변경
-  const background = {
-    basic: "#FFF",
-    active: "#06CBF7",
-    danger: "#FF3D3D",
-    warning: "#F8B200",
-  };
-
-  return background[status];
-};
-
 const Chip = ({
-  tag = "#",
+  adornments = "#",
   label = "Chip",
   status = "basic",
-  isRounded,
+  variants = "pill",
   onDelete,
 }: ChipProps) => {
-  const props = { status, isRounded };
+  const props = { status, variants };
 
   return (
     <StyledChip {...props}>
-      {tag}
+      {adornments}
       <StyledChipLabel status={status}>{label}</StyledChipLabel>
       {onDelete && (
         //  TODO: 아이콘 추가
@@ -49,29 +38,44 @@ export default Chip;
 const StyledChip = styled.div<ChipProps>`
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   height: 26px;
 
   padding: 0 10px;
 
-  font-size: 16px;
+  ${({ theme }) => theme.typography.md};
 
-  border-radius: ${({ isRounded }) => (isRounded ? "6px" : "13px")};
+  border-radius: ${({ variants }) =>
+    variants === "pill" ? `${26 / 2}px` : "6px"};
 
-  border: ${({ status }) =>
-    status !== "basic" ? "none" : "1px solid #dfdfdf"};
-  color: ${({ status }) => (status !== "basic" ? "#fff" : "#999")};
-  background: ${({ status }) => getBackgroundColor(status)};
+  border: ${({ status, theme }) =>
+    status === "basic" ? `1px solid ${theme.colors.general["300"]}` : "none"};
+
+  color: ${({ status, theme }) =>
+    status === "basic" ? theme.colors.general["600"] : "#FFF"};
+
+  background: ${({ status, theme }) => {
+    switch (status) {
+      case "active":
+        return theme.colors.primary["500"];
+      case "danger":
+        return theme.colors.danger["500"];
+      case "warning":
+        return theme.colors.warning["500"];
+      default:
+        return "#fff";
+    }
+  }};
 
   gap: 2px;
 `;
 
 const StyledChipLabel = styled.span<ChipProps>`
-  font-size: 14px;
-  line-height: 22px;
+  ${({ theme }) => theme.typography.sm};
 
-  color: ${({ status }) => (status !== "basic" ? "#fff" : "#999")};
+  color: ${({ status, theme }) =>
+    status === "basic" ? theme.colors.general["600"] : "#FFF"};
 `;
 
 const StyledCancelIcon = styled.span`
