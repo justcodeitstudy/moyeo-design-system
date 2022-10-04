@@ -1,101 +1,19 @@
 import React, { ButtonHTMLAttributes } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import buttonStyles from "./style";
 
-type Size = "medium" | "large";
 type Color = "primary" | "general" | "success" | "warning" | "danger";
-type Variants = "default" | "outlined" | "text";
+type Variants = "filled" | "outlined" | "text";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: Size;
   color?: Color;
   variants?: Variants;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-// const generateStatusStyle = (status?: Status) => {
-//   switch (status) {
-//     case "primary":
-//       return css`
-//         color: #ffffff;
-//         background: #12d4ff;
-
-//         &:hover:enabled {
-//           background: #6be4ff;
-//         }
-
-//         &:active:enabled {
-//           background: #00b1e9;
-//         }
-//       `;
-//     case "secondary":
-//       return css`
-//         color: #444444;
-//         background: #ffffff;
-//         border: 1px solid #d9d9d9;
-
-//         &:hover:enabled {
-//           color: #6be4ff;
-//           background: #ffffff;
-//           border: 1px solid #6be4ff;
-//         }
-
-//         &:active:enabled {
-//           font-weight: 500;
-//           color: #00b1e9;
-//           background: #ffffff;
-//           border: 1px solid #00b1e9;
-//         }
-//       `;
-//     case "danger":
-//       return css`
-//         color: #ffffff;
-//         background: #ff3d3d;
-
-//         &:hover:enabled {
-//           background: #ff8383;
-//         }
-
-//         &:active:enabled {
-//           background: #ea2222;
-//         }
-//       `;
-//     case "basic":
-//     default:
-//       return css`
-//         color: #444444;
-//         background: none;
-
-//         &:hover:enabled {
-//           background: #fafafa;
-//         }
-
-//         &:active:enabled {
-//           background: #d9d9d9;
-//         }
-//       `;
-//   }
-// };
-
-// const generateSizedStyle = (size?: Size) => {
-//   switch (size) {
-//     case "large":
-//       return css`
-//         height: 38px;
-//         padding: 12px 24px;
-//       `;
-//     case "medium":
-//     default:
-//       return css`
-//         height: 30px;
-//         padding: 8px 16px;
-//       `;
-//   }
-// };
-
 export const Button = ({
-  size = "medium",
   color = "primary",
-  variants = "default",
+  variants = "filled",
   disabled = false,
   onClick,
   children,
@@ -103,7 +21,6 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <StyledButton
-      size={size}
       color={color}
       variants={variants}
       disabled={disabled}
@@ -116,13 +33,25 @@ export const Button = ({
 };
 
 const StyledButton = styled.button<ButtonProps>`
-  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-width: 70px;
+  min-height: 40px;
   padding: 8px 16px;
   border-radius: 6px;
+  overflow: hidden;
+  border: none;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  ${({ theme }) => theme.typography.md};
+  ${({ color }) => color && buttonStyles.colors[color]};
+  ${({ variants }) => variants && buttonStyles.variants[variants]};
 
   &:disabled {
-    color: #ffffff;
-    background: #e5e5e5;
+    pointer-events: none;
+    background-color: ${({ theme }) => theme.colors.general[200]};
+    color: ${({ theme }) => theme.colors.text.third};
   }
 `;

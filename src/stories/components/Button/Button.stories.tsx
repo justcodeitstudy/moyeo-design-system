@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import React from "react";
-import Button, { ButtonProps } from "../../../components/Button";
+import { Button, ButtonProps } from "../../../components/Button";
 
 export default {
   title: "Components/Button",
@@ -9,9 +9,8 @@ export default {
 
 const Template: Story<ButtonProps> = (args) => <Button {...args}>버튼</Button>;
 
-export const Basic: Story<ButtonProps> = (args) => <Template {...args} />;
+export const Default: Story<ButtonProps> = (args) => <Template {...args} />;
 
-Basic.args = {
-  size: "medium",
-  status: "basic",
+Default.args = {
+  variants: "filled",
 };
