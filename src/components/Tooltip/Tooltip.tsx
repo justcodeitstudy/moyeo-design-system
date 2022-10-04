@@ -20,9 +20,9 @@ const tooltipColorStyle: Record<TooltipColor, FlattenSimpleInterpolation> = {
   `,
 };
 
-type TooltipPlacement = "bottom" | "top";
-const tooltipPlacementStyle: Record<
-  TooltipPlacement,
+type TooltipPosition = "bottom" | "top";
+const tooltipPositionStyle: Record<
+  TooltipPosition,
   FlattenSimpleInterpolation
 > = {
   bottom: css`
@@ -46,7 +46,7 @@ const tooltipPlacementStyle: Record<
 export interface TooltipProps {
   children: React.ReactNode;
   content: React.ReactNode;
-  placement?: TooltipPlacement;
+  position?: TooltipPosition;
   color?: TooltipColor;
 }
 
@@ -60,7 +60,7 @@ const TooltipContainer = styled.div`
   }
 `;
 
-type TooltipContentProps = Required<Pick<TooltipProps, "placement" | "color">>;
+type TooltipContentProps = Required<Pick<TooltipProps, "position" | "color">>;
 const TooltipContent = styled.div<TooltipContentProps>`
   width: max-content;
 
@@ -79,7 +79,7 @@ const TooltipContent = styled.div<TooltipContentProps>`
 
   border: 1px solid;
 
-  ${({ placement }) => tooltipPlacementStyle[placement]};
+  ${({ position }) => tooltipPositionStyle[position]};
   ${({ color }) => tooltipColorStyle[color]};
 
   & > .triangle {
@@ -100,7 +100,7 @@ const TooltipContent = styled.div<TooltipContentProps>`
 const Tooltip = ({
   children,
   content,
-  placement = "bottom",
+  position = "bottom",
   color = "basic",
 }: TooltipProps) => {
   return (
@@ -108,7 +108,7 @@ const Tooltip = ({
       {children}
       <TooltipContent
         className="tooltip-content"
-        placement={placement}
+        position={position}
         color={color}
       >
         {content}

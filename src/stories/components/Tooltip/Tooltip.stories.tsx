@@ -14,5 +14,5 @@ export const Basic: Story<TooltipProps> = (args) => <Template {...args} />;
 Basic.args = {
   children: <button style={{ padding: "4px 24px" }}>트리거</button>,
   content: "Tooltip 툴팁",
-  placement: "bottom",
+  position: "bottom",
 };
