@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css, FlattenSimpleInterpolation } from "styled-components";
 
-type TooltipColor = "basic" | "primary" | "type01";
+type TooltipColor = "basic" | "primary" | "black";
 const tooltipColorStyle: Record<TooltipColor, FlattenSimpleInterpolation> = {
   basic: css`
     background-color: #fff;
@@ -13,7 +13,7 @@ const tooltipColorStyle: Record<TooltipColor, FlattenSimpleInterpolation> = {
     border-color: #06cbf7;
     color: #fff;
   `,
-  type01: css`
+  black: css`
     background-color: #4d4d4d;
     border-color: #4d4d4d;
     color: #fff;
