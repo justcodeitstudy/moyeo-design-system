@@ -8,6 +8,7 @@ export default {
       --text-hover-background-color: ${({ theme }) => theme.colors.general[50]};
       --text-active-background-color: #fff;
       --text-color: ${({ theme }) => theme.colors.primary[500]};
+      --outlined-active-color: ${({ theme }) => theme.colors.primary[600]};
     `,
     general: css`
       --main-color: ${({ theme }) => theme.colors.general[400]};
@@ -16,6 +17,7 @@ export default {
       --text-active-background-color: ${({ theme }) =>
         theme.colors.primary[100]};
       --text-color: ${({ theme }) => theme.colors.black[400]};
+      --outlined-active-color: ${({ theme }) => theme.colors.general[700]};
     `,
     success: css`
       --main-color: ${({ theme }) => theme.colors.success[500]};
@@ -23,6 +25,7 @@ export default {
       --text-hover-background-color: ${({ theme }) => theme.colors.general[50]};
       --text-active-background-color: #fff;
       --text-color: ${({ theme }) => theme.colors.success[500]};
+      --outlined-active-color: ${({ theme }) => theme.colors.success[600]};
     `,
     danger: css`
       --main-color: ${({ theme }) => theme.colors.danger[500]};
@@ -30,6 +33,7 @@ export default {
       --text-hover-background-color: ${({ theme }) => theme.colors.general[50]};
       --text-active-background-color: #fff;
       --text-color: ${({ theme }) => theme.colors.danger[500]};
+      --outlined-active-color: ${({ theme }) => theme.colors.danger[600]};
     `,
     warning: css`
       --main-color: ${({ theme }) => theme.colors.warning[500]};
@@ -37,6 +41,7 @@ export default {
       --text-hover-background-color: ${({ theme }) => theme.colors.general[50]};
       --text-active-background-color: #fff;
       --text-color: ${({ theme }) => theme.colors.warning[500]};
+      --outlined-active-color: ${({ theme }) => theme.colors.warning[600]};
     `,
   },
   variants: {
@@ -61,8 +66,8 @@ export default {
         box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
       }
       &:active {
-        outline: 1px solid var(--active-color);
-        color: var(--active-color);
+        outline: 1px solid var(--outlined-active-color);
+        color: var(--outlined-active-color);
       }
     `,
     text: css`
