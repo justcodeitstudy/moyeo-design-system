@@ -38,7 +38,7 @@ const StyledButton = styled.button<ButtonProps>`
   justify-content: center;
   position: relative;
   min-width: 70px;
-  min-height: 40px;
+  height: 40px;
   padding: 8px 16px;
   border-radius: 6px;
   overflow: hidden;
