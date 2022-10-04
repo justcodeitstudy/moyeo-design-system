@@ -11,6 +11,4 @@ const Template: Story<ButtonProps> = (args) => <Button {...args}>버튼</Button>
 
 export const Default: Story<ButtonProps> = (args) => <Template {...args} />;
 
-Default.args = {
-  variants: "filled",
-};
+Default.args = {};
