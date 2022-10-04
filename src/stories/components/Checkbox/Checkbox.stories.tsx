@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Meta, Story } from "@storybook/react";
 import { Checkbox, CheckboxProps } from "../../../components/Checkbox";
 
@@ -7,31 +7,17 @@ export default {
   component: Checkbox,
 } as Meta;
 
-export const Medium: Story<CheckboxProps> = () => {
+export const Default: Story<CheckboxProps> = (args) => {
   const [checked, setChecked] = useState(false);
 
   const onCheckHandler = useCallback(() => {
     setChecked((checked) => !checked);
   }, []);
 
-  return (
-    <Fragment>
-      <Checkbox checked={checked} onChange={onCheckHandler} />
-      <Checkbox checked />
-      <Checkbox disabled />
-      <Checkbox checked disabled />
-    </Fragment>
-  );
-};
-Medium.parameters = {
-  controls: { disable: true },
+  return <Checkbox {...args} checked={checked} onChange={onCheckHandler} />;
 };
 
-export const PlayGround: Story<CheckboxProps> = (args) => (
-  <Checkbox {...args} />
-);
-
-PlayGround.argTypes = {
+Default.argTypes = {
   label: {
     control: "text",
     defaultValue: "Label",
