@@ -51,6 +51,7 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:disabled {
     pointer-events: none;
+    outline: none;
     background-color: ${({ theme }) => theme.colors.general[200]};
     color: ${({ theme }) => theme.colors.text.third};
   }
