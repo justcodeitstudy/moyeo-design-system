@@ -5,7 +5,6 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   message?: React.ReactNode;
   disabled?: boolean;
-  width?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -51,7 +50,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 const StyledInputContainer = styled("div")`
   display: flex;
   overflow: hidden;
-  width: 100%;
 `;
 
 const StyledInput = styled("input")`
