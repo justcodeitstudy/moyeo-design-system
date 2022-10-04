@@ -1,30 +1,33 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
+import { getBackgroundColor, getBorderColor, getColor } from "./style";
 
-type Status = "basic" | "active" | "danger" | "warning";
+export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
 
 export interface ChipProps {
-  status: Status;
+  color: Color;
   adornments?: ReactNode;
   label?: string;
   variants?: Variants;
+  outlined?: boolean;
   onDelete?: (label: string) => void;
 }
 
 const Chip = ({
   adornments = "#",
   label = "Chip",
-  status = "basic",
-  variants = "pill",
+  color = "basic",
+  variants,
+  outlined,
   onDelete,
 }: ChipProps) => {
-  const props = { status, variants };
+  const props = { color, variants, outlined };
 
   return (
     <StyledChip {...props}>
       {adornments}
-      <StyledChipLabel status={status}>{label}</StyledChipLabel>
+      <StyledChipLabel {...props}>{label}</StyledChipLabel>
       {onDelete && (
         //  TODO: 아이콘 추가
         <StyledCancelIcon onClick={() => onDelete(label)}>X</StyledCancelIcon>
@@ -49,24 +52,12 @@ const StyledChip = styled.div<ChipProps>`
   border-radius: ${({ variants }) =>
     variants === "pill" ? `${26 / 2}px` : "6px"};
 
-  border: ${({ status, theme }) =>
-    status === "basic" ? `1px solid ${theme.colors.general["300"]}` : "none"};
+  border: ${({ color, outlined }) =>
+    `1px solid ${getBorderColor(color, outlined)}`};
 
-  color: ${({ status, theme }) =>
-    status === "basic" ? theme.colors.general["600"] : "#FFF"};
+  color: ${({ color, outlined }) => getColor(color, outlined)};
 
-  background: ${({ status, theme }) => {
-    switch (status) {
-      case "active":
-        return theme.colors.primary["500"];
-      case "danger":
-        return theme.colors.danger["500"];
-      case "warning":
-        return theme.colors.warning["500"];
-      default:
-        return "#fff";
-    }
-  }};
+  background: ${({ color, outlined }) => getBackgroundColor(color, outlined)};
 
   gap: 2px;
 `;
@@ -74,8 +65,7 @@ const StyledChip = styled.div<ChipProps>`
 const StyledChipLabel = styled.span<ChipProps>`
   ${({ theme }) => theme.typography.sm};
 
-  color: ${({ status, theme }) =>
-    status === "basic" ? theme.colors.general["600"] : "#FFF"};
+  color: ${({ color, outlined }) => getColor(color, outlined)};
 `;
 
 const StyledCancelIcon = styled.span`
