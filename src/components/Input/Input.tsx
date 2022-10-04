@@ -5,12 +5,22 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   message?: React.ReactNode;
   disabled?: boolean;
+  width?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { message, value = "", name, label, disabled = false, onChange, ...rest },
+    {
+      message,
+      value = "",
+      name,
+      label,
+      disabled = false,
+      width = 100,
+      onChange,
+      ...rest
+    },
     ref,
   ) => {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             name={name}
             value={value}
             disabled={disabled}
+            width={width}
             onChange={handleInput}
             {...rest}
           />
@@ -45,7 +56,7 @@ const StyledInputContainer = styled("div")`
 
 const StyledInput = styled("input")`
   outline: none;
-  width: 100%;
+  width: ${({ width }) => `${width}%`};
   border: 1px solid ${({ theme }) => theme.colors.general[600]};
   padding: 12px 16px;
   border-radius: 6px;

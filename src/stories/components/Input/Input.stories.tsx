@@ -5,6 +5,16 @@ import { Input, InputProps } from "../../../components/Input";
 export default {
   title: "Components/Input",
   component: Input,
+  argTypes: {
+    width: {
+      control: {
+        type: "range",
+        min: 10,
+        max: 100,
+        step: 1,
+      },
+    },
+  },
 } as Meta;
 
 const Template: Story<InputProps> = (args) => {
