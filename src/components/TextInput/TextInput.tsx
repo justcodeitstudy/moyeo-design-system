@@ -1,14 +1,14 @@
 import React, { forwardRef, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   message?: React.ReactNode;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       message,
@@ -29,8 +29,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <>
         {label && <StyledLabelText htmlFor={name}>{label}</StyledLabelText>}
-        <StyledInputContainer>
-          <StyledInput
+        <StyledTextInputContainer>
+          <StyledTextInput
             ref={ref}
             aria-label={name}
             name={name}
@@ -40,19 +40,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             onChange={handleInput}
             {...rest}
           />
-        </StyledInputContainer>
+        </StyledTextInputContainer>
         {message && <StyledDescriptionText>{message}</StyledDescriptionText>}
       </>
     );
   },
 );
 
-const StyledInputContainer = styled("div")`
+const StyledTextInputContainer = styled("div")`
   display: flex;
   overflow: hidden;
 `;
 
-const StyledInput = styled("input")`
+const StyledTextInput = styled("input")`
   outline: none;
   width: ${({ width }) => `${width}%`};
   border: 1px solid ${({ theme }) => theme.colors.general[600]};

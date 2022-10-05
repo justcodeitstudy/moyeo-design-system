@@ -1,10 +1,10 @@
 import { Meta, Story } from "@storybook/react";
 import React, { useState } from "react";
-import { Input, InputProps } from "../../../components/Input";
+import { TextInput, TextInputProps } from "../../../components/TextInput";
 
 export default {
-  title: "Components/Input",
-  component: Input,
+  title: "Components/TextInput",
+  component: TextInput,
   argTypes: {
     width: {
       control: {
@@ -17,10 +17,10 @@ export default {
   },
 } as Meta;
 
-const Template: Story<InputProps> = (args) => {
+const Template: Story<TextInputProps> = (args) => {
   const [value, setValue] = useState("");
   return (
-    <Input
+    <TextInput
       {...args}
       label={args.label}
       placeholder={args.placeholder}
