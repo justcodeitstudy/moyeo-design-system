@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { CheckboxIcon } from "../../Icon/svg";
 import { getCheckboxSize, getLabelSize } from "./style";
 
+type Size = "medium" | "large" | "small";
 type Ref = HTMLInputElement;
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
