@@ -54,7 +54,7 @@ const TooltipContainer = styled.div`
   width: fit-content;
   position: relative;
 
-  &:hover > .tooltip-content {
+  &:hover > [role="tooltip"] {
     opacity: 1;
     visibility: visible;
   }
@@ -107,11 +107,7 @@ const Tooltip = ({
   return (
     <TooltipContainer>
       {children}
-      <TooltipContent
-        className="tooltip-content"
-        position={position}
-        color={color}
-      >
+      <TooltipContent role="tooltip" position={position} color={color}>
         {content}
       </TooltipContent>
     </TooltipContainer>
