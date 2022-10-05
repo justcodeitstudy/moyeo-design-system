@@ -10,7 +10,6 @@ import { SearchIcon } from "../../Icon/svg";
 
 export interface SearchInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
-  placeholder?: string;
   value?: string;
   onSearch?: (value: string) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,7 +17,15 @@ export interface SearchInputProps
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
-    { placeholder = "", autoFocus, value, onSearch, onChange, ...rest },
+    {
+      placeholder = "",
+      width = "400px",
+      autoFocus,
+      value,
+      onSearch,
+      onChange,
+      ...rest
+    },
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -42,7 +49,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     return (
-      <StyledSearchInputContainer {...rest}>
+      <StyledSearchInputContainer width={width}>
         <StyledInput
           ref={inputRef}
           value={inputValue}
@@ -59,9 +66,10 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   },
 );
 
-const StyledSearchInputContainer = styled("div")`
+const StyledSearchInputContainer = styled("div")<SearchInputProps>`
   display: flex;
   align-items: center;
+  width: ${({ width }) => width};
   border: none;
   border-radius: 8px;
   position: relative;
