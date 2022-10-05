@@ -5,16 +5,7 @@ import { TextInput, TextInputProps } from "../../../components/TextInput";
 export default {
   title: "Components/TextInput",
   component: TextInput,
-  argTypes: {
-    width: {
-      control: {
-        type: "range",
-        min: 10,
-        max: 100,
-        step: 1,
-      },
-    },
-  },
+  argTypes: {},
 } as Meta;
 
 const Template: Story<TextInputProps> = (args) => {
@@ -39,4 +30,5 @@ Default.args = {
   label: "First name 성을 입력~",
   placeholder: "placeholder",
   message: "Max 100 characters 최대 100자",
+  width: "300px",
 };

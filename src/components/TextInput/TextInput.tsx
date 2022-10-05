@@ -16,7 +16,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       name,
       label,
       disabled = false,
-      width = 100,
+      width = "300px",
       onChange,
       ...rest
     },
@@ -54,7 +54,7 @@ const StyledTextInputContainer = styled("div")`
 
 const StyledTextInput = styled("input")`
   outline: none;
-  width: ${({ width }) => `${width}%`};
+  width: ${({ width }) => width};
   border: 1px solid ${({ theme }) => theme.colors.general[600]};
   padding: 12px 16px;
   border-radius: 6px;
