@@ -59,7 +59,7 @@ const Modal = ({
     <ModalPortal>
       <ModalContainer
         role="dialog"
-        aria-hidden={opened}
+        aria-hidden={!opened}
         opened={opened}
         {...props}
         onClick={(event) => {
