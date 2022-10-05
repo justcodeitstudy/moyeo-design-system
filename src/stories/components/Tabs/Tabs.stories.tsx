@@ -15,7 +15,7 @@ const items = [
   { label: "기획", value: "plan" },
 ];
 
-export const Template: Story = () => {
+export const Default: Story = () => {
   const [selected, setSelected] = useState("popular");
 
   const handleSelect = useCallback(
