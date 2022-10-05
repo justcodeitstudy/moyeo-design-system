@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { CheckboxIcon } from "../../Icon/svg";
 import { getCheckboxSize, getLabelSize } from "./style";
 
-type Size = "medium" | "large" | "small";
+export type Size = "medium" | "large" | "small";
 type Ref = HTMLInputElement;
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -63,7 +63,7 @@ const StyledInputWrap = styled.span`
 const StyledCheckbox = styled.input<CheckboxProps>`
   ${({ boxsize }) => getCheckboxSize(boxsize || "medium").checkbox};
 
-  border: 2px solid #afafaf;
+  border: ${({ theme }) => `2px solid ${theme.colors.general["500"]}`};
   border-radius: 4px;
 
   appearance: none;
@@ -71,17 +71,17 @@ const StyledCheckbox = styled.input<CheckboxProps>`
   cursor: pointer;
 
   &:checked {
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primary["500"]};
     border: none;
   }
 
   &:disabled {
-    border-color: #d9d9d9;
+    border-color: ${({ theme }) => theme.colors.text.disabled};
     cursor: not-allowed;
   }
 
   &:checked:disabled {
-    background: #d9d9d9;
+    background: ${({ theme }) => theme.colors.text.disabled};
   }
 `;
 
@@ -92,14 +92,15 @@ const StyledCheckboxIcon = styled(CheckboxIcon)<CheckboxProps>`
   ${({ boxsize }) => getCheckboxSize(boxsize || "medium").icon};
 
   & path {
-    stroke: ${(props) =>
-      (!props.checked && props.disabled && "#fff") ||
-      (props.disabled && "#888")};
+    stroke: ${({ theme, checked, disabled }) =>
+      (!checked && disabled && "#fff") ||
+      (disabled && theme.colors.text.disabled)};
   }
 `;
 
 const Label = styled.span<CheckboxProps>`
   ${({ boxsize }) => getLabelSize(boxsize || "medium")};
 
-  color: #4d4d4d;
+  margin-left: 12px;
+  color: ${({ theme }) => theme.colors.black["400"]};
 `;

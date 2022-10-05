@@ -1,3 +1,6 @@
+import { Theme } from "../../styles/theme";
+import { Size } from "./Checkbox";
+
 export const getCheckboxSize = (boxSize: Size) => {
   const checkbox = {
     medium: { width: 24, height: 24 },
@@ -19,9 +22,9 @@ export const getCheckboxSize = (boxSize: Size) => {
 
 export const getLabelSize = (boxSize: Size) => {
   const font = {
-    medium: { fontSize: 16, marginLeft: 12 },
-    large: { fontSize: 20, marginLeft: 16 },
-    small: { fontSize: 16, marginLeft: 12 },
+    medium: { fontSize: Theme.typography.md.fontSize, marginLeft: 12 },
+    large: { fontSize: Theme.typography.lg.fontSize, marginLeft: 16 },
+    small: { fontSize: Theme.typography.md.fontSize, marginLeft: 12 },
   };
 
   return font[boxSize];
