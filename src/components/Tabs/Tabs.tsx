@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes, SyntheticEvent, useCallback } from "react";
+import React, { HtmlHTMLAttributes, MouseEvent, useCallback } from "react";
 import styled from "styled-components";
 
 export type TabsProps = HtmlHTMLAttributes<HTMLUListElement>;
@@ -21,16 +21,16 @@ export const Item = ({
   value,
   selected = false,
   children,
-  onSelect,
+  onClick,
   onTabSelect,
   ...rest
 }: TabsItemProps) => {
-  const handleSelect = useCallback(
-    (e: SyntheticEvent<HTMLLIElement>) => {
+  const handleClick = useCallback(
+    (e: MouseEvent<HTMLLIElement>) => {
       if (value) {
         onTabSelect?.(value);
       }
-      onSelect?.(e);
+      onClick?.(e);
     },
     [value, onTabSelect],
   );
@@ -40,7 +40,7 @@ export const Item = ({
       role="tablist"
       aria-selected={selected}
       selected={selected}
-      onSelect={handleSelect}
+      onClick={handleClick}
       {...rest}
     >
       {children}
