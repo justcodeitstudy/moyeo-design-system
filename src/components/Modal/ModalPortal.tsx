@@ -1,27 +1,12 @@
-import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { ModalProps } from "./Modal";
 
-const ModalPortal = ({ children }: { children: React.ReactNode }) => {
-  const [containerElement, setContainerElement] = useState<HTMLElement>();
+interface ModalPortalProps extends Pick<ModalProps, "opened"> {
+  children: React.ReactNode;
+}
 
-  useEffect(() => {
-    const newContainer = document.createElement("div");
-    document.body.append(newContainer);
-
-    setContainerElement(newContainer);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (containerElement) {
-        document.body.removeChild(containerElement);
-      }
-    };
-  }, [containerElement]);
-
-  return containerElement
-    ? ReactDOM.createPortal(children, containerElement)
-    : null;
+const ModalPortal = ({ children, opened }: ModalPortalProps) => {
+  return opened ? ReactDOM.createPortal(children, document.body) : null;
 };
 
 export default ModalPortal;

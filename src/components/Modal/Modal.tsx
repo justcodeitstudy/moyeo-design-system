@@ -56,7 +56,7 @@ const Modal = ({
   }, [opened]);
 
   return (
-    <ModalPortal>
+    <ModalPortal opened={opened}>
       <ModalContainer
         role="dialog"
         aria-hidden={!opened}
