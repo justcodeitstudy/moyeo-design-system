@@ -28,7 +28,7 @@ const tooltipPositionStyle: Record<
   bottom: css`
     top: calc(100% + 10px);
 
-    & > .triangle {
+    &:after {
       top: -7px;
       transform: rotate(45deg);
     }
@@ -36,7 +36,7 @@ const tooltipPositionStyle: Record<
   top: css`
     bottom: calc(100% + 10px);
 
-    & > .triangle {
+    &:after {
       bottom: -7px;
       transform: rotate(225deg);
     }
@@ -82,7 +82,8 @@ const TooltipContent = styled.div<TooltipContentProps>`
   ${({ position }) => tooltipPositionStyle[position]};
   ${({ color }) => tooltipColorStyle[color]};
 
-  & > .triangle {
+  &:after {
+    content: "";
     position: absolute;
     left: calc(50% - 6px);
 
@@ -112,7 +113,6 @@ const Tooltip = ({
         color={color}
       >
         {content}
-        <div className="triangle"></div>
       </TooltipContent>
     </TooltipContainer>
   );
