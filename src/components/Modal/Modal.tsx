@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { HTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import ModalContent from "./ModalContent";
@@ -49,9 +49,26 @@ const Modal = ({
     setOpened(openedProps);
   }, [openedProps]);
 
+  const onKeydownClose = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape" && onClose) {
+        onClose();
+      }
+    },
+    [onClose],
+  );
+
   useEffect(() => {
     if (!opened && onClose) {
       onClose();
+    }
+
+    if (opened) {
+      window.addEventListener("keyup", onKeydownClose);
+
+      return () => {
+        window.removeEventListener("keyup", onKeydownClose);
+      };
     }
   }, [opened]);
 
