@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes, useCallback } from "react";
+import React, { HtmlHTMLAttributes, SyntheticEvent, useCallback } from "react";
 import styled from "styled-components";
 
 export type TabsProps = HtmlHTMLAttributes<HTMLUListElement>;
@@ -21,20 +21,27 @@ export const Item = ({
   value,
   selected = false,
   children,
+  onSelect,
   onTabSelect,
+  ...rest
 }: TabsItemProps) => {
-  const handleClick = useCallback(() => {
-    if (onTabSelect && value) {
-      onTabSelect(value);
-    }
-  }, [value, onTabSelect]);
+  const handleSelect = useCallback(
+    (e: SyntheticEvent<HTMLLIElement>) => {
+      if (value) {
+        onTabSelect?.(value);
+      }
+      onSelect?.(e);
+    },
+    [value, onTabSelect],
+  );
 
   return (
     <StyledItem
       role="tablist"
       aria-selected={selected}
       selected={selected}
-      onClick={handleClick}
+      onSelect={handleSelect}
+      {...rest}
     >
       {children}
     </StyledItem>
@@ -52,18 +59,19 @@ const StyledTabs = styled.ul`
 const StyledItem = styled.li<TabsItemProps>`
   display: inline-block;
   padding: 14px 20px;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
-  color: ${({ selected }) => (selected ? `#06CBF7` : `#999999`)};
+  ${({ theme }) => theme.typography.header3};
+  color: ${({ theme, selected }) =>
+    selected ? theme.colors.primary[500] : theme.colors.text.secondary};
+  border-bottom: ${({ theme, selected }) =>
+    selected
+      ? `2px solid ${theme.colors.primary[500]}`
+      : "0 solid transparent"};
   background: #ffffff;
-
-  border-bottom: ${({ selected }) =>
-    selected ? `2px solid #06CBF7` : "0 solid transparent"};
-  cursor: pointer;
   transition: border-bottom-color 0.5s;
+  cursor: pointer;
 
   &:hover {
-    color: ${({ selected }) => (selected ? `#06CBF7` : `#4d4d4d`)};
+    color: ${({ theme, selected }) =>
+      selected ? theme.colors.primary[500] : theme.colors.text.primary};
   }
 `;
