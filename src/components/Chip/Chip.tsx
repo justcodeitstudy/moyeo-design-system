@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { getBackgroundColor, getBorderColor, getColor } from "./style";
+import { CancelIcon } from "../../Icon/svg";
 
 export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
@@ -26,12 +27,9 @@ const Chip = ({
 
   return (
     <StyledChip {...props}>
-      {adornments}
+      {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
-      {onDelete && (
-        //  TODO: 아이콘 추가
-        <StyledCancelIcon onClick={() => onDelete(label)}>X</StyledCancelIcon>
-      )}
+      {onDelete && <StyledCancelIcon aria-hidden {...props} />}
     </StyledChip>
   );
 };
@@ -68,7 +66,20 @@ const StyledChipLabel = styled.span<ChipProps>`
   color: ${({ color, outlined }) => getColor(color, outlined)};
 `;
 
-const StyledCancelIcon = styled.span`
+const StyledChipAdornments = styled.span`
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledCancelIcon = styled(CancelIcon)<ChipProps>`
   cursor: pointer;
-  margin-left: 2px;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  & path {
+    stroke: ${({ color, outlined }) => getColor(color, outlined)};
+  }
 `;

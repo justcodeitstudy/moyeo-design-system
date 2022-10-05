@@ -1,6 +1,7 @@
 import { Meta, Story } from "@storybook/react";
 import React from "react";
 import { Chip, ChipProps } from "../../../components/Chip";
+import { CancelIcon } from "../../../Icon/svg";
 
 export default {
   title: "Components/Chip",
