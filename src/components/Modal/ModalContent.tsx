@@ -16,6 +16,8 @@ const StyledModalContent = styled.div`
 const ModalContent = ({ children, ...props }: ModalContentProps) => {
   return (
     <StyledModalContent
+      role="document"
+      tabIndex={-1}
       {...props}
       onClick={(event) => {
         props.onClick?.(event);
