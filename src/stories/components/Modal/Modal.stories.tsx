@@ -5,11 +5,6 @@ import Modal, { ModalProps } from "../../../components/Modal/Modal";
 export default {
   title: "Components/Modal",
   component: Modal,
-  argTypes: {
-    opened: {
-      control: { type: "boolean" },
-    },
-  },
 } as Meta;
 
 export const Default: Story<ModalProps> = (args) => {
@@ -20,7 +15,7 @@ export const Default: Story<ModalProps> = (args) => {
   }, [args.opened]);
 
   return (
-    <div>
+    <>
       <button onClick={() => setOpened(true)}>Modal 열기</button>
       <Modal opened={opened} onClose={() => setOpened(false)}>
         <Modal.Content>
@@ -28,7 +23,7 @@ export const Default: Story<ModalProps> = (args) => {
           모달 내용
         </Modal.Content>
       </Modal>
-    </div>
+    </>
   );
 };
 Default.args = {
