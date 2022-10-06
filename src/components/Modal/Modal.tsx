@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { HTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import ModalContent from "./ModalContent";
@@ -6,7 +6,7 @@ import ModalPortal from "./ModalPortal";
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   opened: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 type ModalContainerProps = Pick<ModalProps, "opened">;
@@ -37,18 +37,7 @@ const ModalContainer = styled.div<ModalContainerProps>`
         `}
 `;
 
-const Modal = ({
-  children,
-  opened: openedProps = false,
-  onClose,
-  ...props
-}: ModalProps) => {
-  const [opened, setOpened] = useState(openedProps);
-
-  useEffect(() => {
-    setOpened(openedProps);
-  }, [openedProps]);
-
+const Modal = ({ children, opened = false, onClose, ...props }: ModalProps) => {
   const onKeydownClose = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {
@@ -59,7 +48,7 @@ const Modal = ({
   );
 
   useEffect(() => {
-    if (!opened && onClose) {
+    if (!opened) {
       onClose();
     }
 
@@ -81,8 +70,7 @@ const Modal = ({
         {...props}
         onClick={(event) => {
           props.onClick?.(event);
-
-          setOpened(false);
+          onClose();
         }}
       >
         {children}
