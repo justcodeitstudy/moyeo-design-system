@@ -24,6 +24,7 @@ const colors = {
     "900": "#7a5700",
   },
   general: {
+    white: "#ffffff",
     "50": "#fbfbfb",
     "100": "#f7f7f7",
     "200": "#ebebeb",
