@@ -17,7 +17,8 @@ export type Variant = "default" | "outline";
 export interface SwitchProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
   checked: boolean;
-  label?: string;
+  onLabel?: string;
+  offLabel?: string;
   align?: Align;
   size?: Size;
   variant?: Variant;
@@ -27,7 +28,8 @@ export interface SwitchProps
 const Switch = ({
   id,
   checked,
-  label,
+  onLabel = "ON",
+  offLabel = "OFF",
   align = "right",
   size = "medium",
   variant = "default",
@@ -40,9 +42,9 @@ const Switch = ({
 
   return (
     <Container {...rest}>
-      {label && align === "left" && (
+      {align === "left" && (
         <Label htmlFor={id} size={size} align={align}>
-          {label}
+          {checked ? onLabel : offLabel}
         </Label>
       )}
       <Wrapper
@@ -54,9 +56,9 @@ const Switch = ({
       >
         <StyledSwitch size={size} variant={variant} checked={checked} />
       </Wrapper>
-      {label && align === "right" && (
+      {align === "right" && (
         <Label htmlFor={id} size={size} align={align}>
-          {label}
+          {checked ? onLabel : offLabel}
         </Label>
       )}
     </Container>
