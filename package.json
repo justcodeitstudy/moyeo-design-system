@@ -1,6 +1,7 @@
 {
   "name": "jci-moyeo-design-system",
   "version": "0.1.1",
+  "homepage": "justcodeitstudy.github.io/moyeo-design-system",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -15,7 +16,9 @@
   "scripts": {
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly"
+    "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly",
+    "predeploy": "build-storybook",
+    "deploy": "gh-pages -d storybook-static"
   },
   "eslintConfig": {
     "extends": [
