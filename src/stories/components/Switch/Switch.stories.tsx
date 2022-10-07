@@ -23,10 +23,11 @@ const Template: Story<SwitchProps> = (args) => {
 export const Basic = Template.bind({});
 
 Basic.args = {
-  checked: true,
   id: "switch",
-  label: "label",
-  labelAlign: "right",
+  checked: true,
+  onLabel: "모집중만 볼래요",
+  offLabel: "전체를 볼래요",
+  align: "right",
   size: "medium",
   variant: "default",
 };
