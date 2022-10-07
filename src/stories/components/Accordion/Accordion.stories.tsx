@@ -11,7 +11,7 @@ const Template: Story<AccordionProps> = (args) => {
   return (
     <>
       <Accordion {...args}>
-        <Accordion.Title>Accordion 01</Accordion.Title>
+        <Accordion.Title>Accordion</Accordion.Title>
         <Accordion.Content>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -29,6 +29,6 @@ const Template: Story<AccordionProps> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  isExpanded: false,
-  align: "left",
+  align: "right",
+  isExpanded: true,
 };

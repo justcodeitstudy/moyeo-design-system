@@ -2,7 +2,7 @@ import React, { HTMLAttributes, useCallback, useContext } from "react";
 import styled from "styled-components";
 import AccordionContext from "./AccordionContext";
 import { ArrowIcon } from "../../Icon/svg";
-import { ArrowAlign } from "./Accordion";
+import { Align } from "./Accordion";
 
 type AccordionTitleProps = HTMLAttributes<HTMLDivElement>;
 
@@ -40,9 +40,9 @@ const AccordionTitle = ({
 
 export default AccordionTitle;
 
-const Wrapper = styled.div<{ align: ArrowAlign }>`
-  padding: 13px 12px 13px 16px;
+const Wrapper = styled.div<{ align: Align }>`
   display: flex;
+  padding: 13px 12px 13px 16px;
   justify-content: ${({ align }) =>
     align === "right" ? "space-between" : "flex-start"};
   align-items: center;
@@ -51,13 +51,13 @@ const Wrapper = styled.div<{ align: ArrowAlign }>`
   cursor: pointer;
 `;
 
-const IconWrapper = styled.div<{ isExpanded: boolean; align: ArrowAlign }>`
-  width: 20px;
-  height: 20px;
-  margin-right: ${({ align }) => (align === "left" ? "8px" : "0")};
+const IconWrapper = styled.div<{ isExpanded: boolean; align: Align }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 20px;
+  height: 20px;
+  margin-right: ${({ align }) => (align === "left" ? "8px" : "0")};
   transform: ${({ isExpanded }) => (isExpanded ? "rotate(-180deg)" : "")};
   transition: transform 0.3s;
 `;

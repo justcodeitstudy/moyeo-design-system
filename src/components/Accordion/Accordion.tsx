@@ -1,19 +1,19 @@
-import React, { HTMLAttributes, useCallback, useMemo, useState } from "react";
+import React, { HTMLAttributes, useMemo, useState } from "react";
 import styled from "styled-components";
-import AccordionTitle from "./AccordionTitle";
 import AccordionContent from "./AccordionContent";
 import AccordionContext from "./AccordionContext";
+import AccordionTitle from "./AccordionTitle";
 
-export type ArrowAlign = "left" | "right";
+export type Align = "left" | "right";
 
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
+  align?: Align;
   isExpanded?: boolean;
-  align?: ArrowAlign;
 }
 
 const Accordion = ({
-  isExpanded = true,
   align = "right",
+  isExpanded = true,
   children,
   ...rest
 }: AccordionProps) => {

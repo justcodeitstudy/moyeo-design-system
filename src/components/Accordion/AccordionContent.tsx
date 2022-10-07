@@ -1,15 +1,25 @@
-import React, { HTMLAttributes, useContext, useLayoutEffect } from "react";
+import React, { HTMLAttributes, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import AccordionContext from "./AccordionContext";
 
 export type AccordionContentProps = HTMLAttributes<HTMLDivElement>;
 
 const AccordionContent = ({ children, ...rest }: AccordionContentProps) => {
+  const [height, setHeight] = useState("");
   const { value } = useContext(AccordionContext);
+  const ref = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (ref.current) {
+      setHeight(`${ref.current.clientHeight}px`);
+    }
+  }, []);
 
   return (
-    <StyledAccordionContent isExpanded={value} {...rest}>
-      {children}
+    <StyledAccordionContent height={height} isExpanded={value} {...rest}>
+      <div ref={ref} style={{ padding: "12px 16px 20px 16px" }}>
+        {children}
+      </div>
     </StyledAccordionContent>
   );
 };
@@ -17,16 +27,15 @@ const AccordionContent = ({ children, ...rest }: AccordionContentProps) => {
 export default AccordionContent;
 
 const StyledAccordionContent = styled.div<{
+  height: string;
   isExpanded: boolean;
 }>`
-  height: ${({ isExpanded }) => (isExpanded ? "auto" : "0")};
-  padding: ${({ isExpanded }) => (isExpanded ? "12px 16px 20px 16px" : "0")};
+  height: ${({ height, isExpanded }) => (isExpanded ? height : "0")};
   border-bottom: ${({ theme, isExpanded }) =>
     isExpanded ? `1px solid ${theme.colors.general[300]}` : ""};
   color: ${({ theme }) => theme.colors.general[600]};
   ${({ theme }) => theme.typography.sm};
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.general.white};
   overflow: hidden;
-
   transition: height 0.3s;
 `;

@@ -1,15 +1,15 @@
 import React from "react";
-import { ArrowAlign } from "./Accordion";
+import { Align } from "./Accordion";
 
 export interface AccordionContextValue {
   value: boolean;
-  align: ArrowAlign;
+  align: Align;
   setValue: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const context = React.createContext<AccordionContextValue>({
-  value: true,
   align: "right",
+  value: true,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setValue: () => {},
 });
