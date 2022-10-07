@@ -17,7 +17,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly",
-    "predeploy": "build-storybook",
+    "predeploy": "rm -rf storybook-static && build-storybook",
     "deploy": "gh-pages -d storybook-static"
   },
   "eslintConfig": {
