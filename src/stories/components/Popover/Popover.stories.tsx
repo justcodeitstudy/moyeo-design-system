@@ -24,7 +24,7 @@ const Popover = () => {
       }}
       isOpen={isOpen}
       onClose={toggleOpen}
-      opener={<button onClick={toggleOpen}>Click!</button>}
+      opener={<button onClick={toggleOpen}>프로필 드롭다운</button>}
     >
       <Ul>
         <Li>마이페이지</Li>
@@ -41,13 +41,14 @@ export const Default = Template.bind({});
 const Ul = styled("ul")`
   max-height: 90px;
   overflow: scroll;
+  padding: 6px;
 `;
 
 const Li = styled("li")`
   display: flex;
   align-items: center;
   list-style: none;
-  height: 16px;
+  height: 24px;
   border-radius: 6px;
   padding: 8px 12px;
   vertical-align: center;
@@ -57,6 +58,7 @@ const Li = styled("li")`
   cursor: pointer;
 
   &:hover {
+    ${({ theme }) => theme.typography.header4};
     background-color: ${({ theme }) => theme.colors.primary[50]};
     color: ${({ theme }) => theme.colors.black[400]};
   }

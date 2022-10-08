@@ -136,13 +136,12 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
 const Paper = styled("div")`
   position: absolute;
   overflow: hidden auto;
-  width: 272px;
+  min-width: 200px;
   outline: 0px;
   opacity: 0;
   background-color: #fff;
   color: ${({ theme }) => theme.colors.text.title};
   border-radius: 4px;
-  padding: 6px;
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   transform: scale(1);
   transition: opacity 0.7 ease-in, transform 0.7 ease-in;
