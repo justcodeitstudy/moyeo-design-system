@@ -1,6 +1,6 @@
 import { Popover as PopoverBase } from "../../../components/Popover";
 import { Story } from "@storybook/react/types-6-0";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 
 export default {
@@ -12,9 +12,9 @@ export default {
 const Popover = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpen = () => {
+  const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
-  };
+  }, []);
 
   return (
     <PopoverBase
@@ -48,13 +48,16 @@ const Li = styled("li")`
   align-items: center;
   list-style: none;
   height: 16px;
-  padding: 10px 12px 10px 12px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  vertical-align: center;
   font-size: ${({ theme }) => theme.typography.md};
-  color: ${({ theme }) => theme.colors.black[400]};
+  color: ${({ theme }) => theme.colors.black[300]};
   font-weight: 300;
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[100]};
+    background-color: ${({ theme }) => theme.colors.primary[50]};
+    color: ${({ theme }) => theme.colors.black[400]};
   }
 `;
