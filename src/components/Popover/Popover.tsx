@@ -92,7 +92,7 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
 
     useResizeEffect(renderContentRect);
 
-    const ContainerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     if (!document.body) {
       throw new Error("document.body is not defined");
@@ -121,7 +121,7 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
         {ReactDOM.createPortal(
           isOpen && (
             // TODO: 추후에 Modal 컴포넌트로 리팩토링?
-            <Container role="dialog" ref={ContainerRef}>
+            <Container role="dialog" ref={containerRef}>
               <Dim aria-hidden="true" onClick={onClose} />
               <Paper ref={contentRef}>{children}</Paper>
             </Container>
