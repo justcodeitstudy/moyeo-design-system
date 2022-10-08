@@ -1,9 +1,13 @@
 import React, { forwardRef, InputHTMLAttributes } from "react";
 import styled from "styled-components";
+import { inputStyle, descriptionStyle } from "./style";
+
+type InputStatus = "default" | "danger" | "warning";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   message?: React.ReactNode;
+  status?: InputStatus;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -15,6 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       value = "",
       name,
       label,
+      status = "default",
       disabled = false,
       width = "300px",
       onChange,
@@ -37,11 +42,16 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             value={value}
             disabled={disabled}
             width={width}
+            status={status}
             onChange={handleInput}
             {...rest}
           />
         </StyledTextInputContainer>
-        {message && <StyledDescriptionText>{message}</StyledDescriptionText>}
+        {message && (
+          <StyledDescriptionText status={status}>
+            {message}
+          </StyledDescriptionText>
+        )}
       </>
     );
   },
@@ -52,10 +62,9 @@ const StyledTextInputContainer = styled("div")`
   overflow: hidden;
 `;
 
-const StyledTextInput = styled("input")`
+const StyledTextInput = styled("input")<TextInputProps>`
   outline: none;
   width: ${({ width }) => width};
-  border: 1px solid ${({ theme }) => theme.colors.general[600]};
   padding: 12px 16px;
   border-radius: 6px;
   transition: border 0.2s ease-in-out;
@@ -79,14 +88,17 @@ const StyledTextInput = styled("input")`
       border: 1px solid ${theme.colors.primary[300]};
     }
   `}
+
+  ${({ status }) => status && inputStyle[status]}
 `;
 
-const StyledDescriptionText = styled("caption")`
+const StyledDescriptionText = styled("caption")<Pick<TextInputProps, "status">>`
   display: flex;
   align-items: center;
   margin: 6px 0 0 2px;
   ${({ theme }) => theme.typography.xs};
   color: ${({ theme }) => theme.colors.black[300]};
+  ${({ status }) => status && descriptionStyle[status]}
 `;
 
 const StyledLabelText = styled("label")`
