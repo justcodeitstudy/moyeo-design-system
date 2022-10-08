@@ -14,6 +14,7 @@ import {
   HorizontalAnchorOrigin,
 } from "./calcAnchorCoord";
 import ReactDOM from "react-dom";
+import { useResizeEffect } from "../../utils";
 
 export interface PopoverProps {
   isOpen: boolean;
@@ -89,17 +90,7 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
 
     useEffect(() => renderContentRect(), [isOpen]);
 
-    useEffect(() => {
-      const handleResize = () => {
-        renderContentRect();
-      };
-
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, [renderContentRect]);
+    useResizeEffect(renderContentRect);
 
     const ContainerRef = useRef<HTMLDivElement>(null);
 
