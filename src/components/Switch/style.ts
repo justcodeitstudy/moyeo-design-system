@@ -88,10 +88,8 @@ export const getLabelStyle = ({ size }: Pick<SwitchProps, "size">) => {
   return size === "medium"
     ? css`
         ${({ theme }) => theme.typography.sm};
-        color: ${({ theme }) => theme.colors.text.primary};
       `
     : css`
         ${({ theme }) => theme.typography.md};
-        color: ${({ theme }) => theme.colors.text.primary};
       `;
 };

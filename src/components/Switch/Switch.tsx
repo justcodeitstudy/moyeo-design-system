@@ -112,6 +112,7 @@ const StyledSwitch = styled.span<
 const Label = styled.label<Pick<SwitchProps, "size" | "align">>`
   ${(props) => getLabelSize(props)}
   ${(props) => getLabelStyle(props)};
+  color: ${({ theme }) => theme.colors.text.primary};
   vertical-align: text-top;
   cursor: pointer;
 `;
