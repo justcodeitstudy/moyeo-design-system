@@ -11,34 +11,41 @@ import { TextInput, TextInputProps } from "../TextInput";
 import { Popover } from "../Popover";
 import { isSameComponent, useResizeEffect } from "../../utils";
 
-export interface SelectProps {
-  value: string;
+export interface SelectProps<Multiple extends boolean = false> {
+  value: Multiple extends true ? string[] : string;
+  isMulti?: Multiple;
   label?: string;
-  onSelect?: (value: string) => void;
-  onChange?: (value: string) => void;
-  onClose?: () => void;
+  disabled?: boolean;
   children: React.ReactNode;
   inputProps?: TextInputProps;
-  disabled?: boolean;
   placeholder?: string;
+  renderInput?: (value: string[]) => React.ReactNode;
+  onSelect?: (value: string) => void;
+  onChange?: (value: Multiple extends true ? string[] : string) => void;
+  onClose?: () => void;
+  onSearchInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Select = ({
+export const Select = <Multiple extends boolean = false>({
   children,
   label,
+  isMulti,
+  renderInput,
   value,
   onSelect,
   onChange,
   onClose,
+  onSearchInputChange,
   inputProps,
   disabled = false,
   placeholder,
-}: SelectProps) => {
+}: SelectProps<Multiple>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [optionListWidth, setOptionListWidth] = useState(0);
   const [currentOption, setCurrentOption] = useState({ value: "", label: "" });
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const reduceOptions = useCallback(
     (
@@ -54,15 +61,42 @@ export const Select = ({
     [],
   );
 
+  const isSelected = (currentValue: string) => {
+    if (isMulti) {
+      return value.includes(currentValue);
+    }
+    return value === currentValue;
+  };
+
+  const updateValue = (selectedValue: string) => {
+    let changedValue: string[] | string = selectedValue;
+
+    if (!changedValue) {
+      throw new Error("selectedValue is undefined");
+    }
+
+    if (isMulti && Array.isArray(value)) {
+      changedValue = value.includes(selectedValue)
+        ? value.filter((x) => x !== selectedValue)
+        : [...value.slice(), selectedValue];
+    }
+
+    onChange?.(changedValue as Multiple extends true ? string[] : string);
+  };
+
   const toSelectOption = (option: React.ReactElement<OptionProps>) => {
     return React.cloneElement(option, {
       ...option.props,
-      selected: value === option.props.value,
+      selected: isSelected(option.props.value),
       onClick: (e: React.MouseEvent<Element>) => {
-        onChange?.(option.props.value);
+        updateValue(option.props.value);
         onSelect?.(option.props.value);
+
+        if (!isMulti) {
+          closeOptionDrawer();
+        }
+
         option.props.onClick?.(e);
-        closeOptionDrawer();
       },
     });
   };
@@ -117,6 +151,37 @@ export const Select = ({
     setOptionListWidth(selectRef.current?.clientWidth || 0),
   );
 
+  useEffect(() => {
+    if (searchKeyword.trim() === "") {
+      return closeOptionDrawer();
+    }
+
+    openOptionDrawer();
+  }, [searchKeyword]);
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearchInputChange?.(e);
+    setSearchKeyword(e.target.value);
+  };
+
+  const inputContent =
+    isMulti && Array.isArray(value) ? (
+      <TextInputOverride
+        value={searchKeyword}
+        onChange={handleSearchInputChange}
+        disabled={disabled}
+        autoFocus
+      />
+    ) : (
+      <TextInputOverride
+        ref={inputRef}
+        value={currentOption?.label ?? value}
+        disabled={disabled}
+        readOnly
+        {...inputProps}
+      />
+    );
+
   const select = (
     <StyledInputContainer
       ref={selectRef}
@@ -127,13 +192,7 @@ export const Select = ({
       placeholder={placeholder}
       hasValue={!!value}
     >
-      <TextInputOverride
-        ref={inputRef}
-        value={currentOption?.label ?? value}
-        readOnly
-        disabled={disabled}
-        {...inputProps}
-      />
+      {inputContent}
       <IconContainer>↓</IconContainer>
     </StyledInputContainer>
   );
@@ -149,6 +208,7 @@ export const Select = ({
   return (
     <>
       {label && <StyledLabelText>{label}</StyledLabelText>}
+      {renderInput && Array.isArray(value) && renderInput(value)}
       <Popover
         isOpen={isOpen}
         anchorPosition={{

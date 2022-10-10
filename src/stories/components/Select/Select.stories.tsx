@@ -66,3 +66,67 @@ const Select = () => {
     </SelectBase>
   );
 };
+
+export const MultiSelect = () => {
+  const [optionValues, setOptionValues] = useState<string[]>([]);
+  const [optionList, setOptionList] = useState(month);
+
+  const handleSelectChange = (value: string) => {
+    const isIncludeValue = optionValues.includes(value);
+
+    if (isIncludeValue) {
+      setOptionValues(optionValues.filter((x) => x !== value));
+    } else {
+      setOptionValues(optionValues.concat(value));
+    }
+  };
+
+  const handleSelectClose = () => {
+    setOptionList(month);
+  };
+
+  const handleDelete = (
+    e: React.MouseEvent<HTMLDivElement>,
+    label?: string,
+  ) => {
+    const value = month?.find((month) => month.label === label)?.value;
+
+    setOptionValues(optionValues.filter((x) => x !== value));
+  };
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value?.trim();
+
+    if (!inputValue) {
+      return setOptionList(month);
+    }
+
+    setOptionList(month.filter(({ label }) => label.includes(inputValue)));
+  };
+
+  return (
+    <SelectBase
+      isMulti
+      value={optionValues}
+      onSelect={handleSelectChange}
+      onChange={setOptionValues}
+      onClose={handleSelectClose}
+      placeholder="태그를 입력해주세요."
+      onSearchInputChange={handleSearchInputChange}
+      renderInput={(selected) =>
+        selected.map((value) => (
+          <span key={value}>
+            {month.find((month) => month.value === value)?.label}
+          </span>
+        ))
+      }
+    >
+      {optionList.length === 0 && <span>검색된 태그가 없습니다.</span>}
+      {optionList.map(({ value, label }) => (
+        <Option key={value} value={value}>
+          {label}
+        </Option>
+      ))}
+    </SelectBase>
+  );
+};
