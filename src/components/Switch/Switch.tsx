@@ -14,11 +14,15 @@ export type Align = "left" | "right";
 export type Size = "medium" | "large";
 export type Variant = "default" | "outline";
 
+export interface LabelStatus {
+  on?: string;
+  off?: string;
+}
+
 export interface SwitchProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
   checked: boolean;
-  onLabel?: string;
-  offLabel?: string;
+  label?: LabelStatus;
   align?: Align;
   size?: Size;
   variant?: Variant;
@@ -28,8 +32,7 @@ export interface SwitchProps
 const Switch = ({
   id,
   checked,
-  onLabel = "ON",
-  offLabel = "OFF",
+  label = { on: "ON", off: "OFF" },
   align = "right",
   size = "medium",
   variant = "default",
@@ -44,7 +47,7 @@ const Switch = ({
     <Container {...rest}>
       {align === "left" && (
         <Label htmlFor={id} size={size} align={align}>
-          {checked ? onLabel : offLabel}
+          {checked ? label.on : label.off}
         </Label>
       )}
       <Wrapper
@@ -58,7 +61,7 @@ const Switch = ({
       </Wrapper>
       {align === "right" && (
         <Label htmlFor={id} size={size} align={align}>
-          {checked ? onLabel : offLabel}
+          {checked ? label.on : label.off}
         </Label>
       )}
     </Container>
