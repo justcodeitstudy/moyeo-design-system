@@ -1,5 +1,4 @@
-import React from "react";
-import { ReactNode, MouseEvent, forwardRef } from "react";
+import React, { ReactNode, MouseEvent, forwardRef } from "react";
 import styled from "styled-components";
 
 export interface OptionProps {

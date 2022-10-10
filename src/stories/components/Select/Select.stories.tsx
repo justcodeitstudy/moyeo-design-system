@@ -1,9 +1,7 @@
 import { Story } from "@storybook/react";
 import React, { useState } from "react";
-import {
-  Select as SelectBase,
-  SelectProps,
-} from "../../../components/Select/Select";
+import { Select as SelectBase, SelectProps } from "components/Select/Select";
+import { Chip } from "components/Chip";
 
 export default {
   title: "components/Select",
@@ -75,10 +73,10 @@ export const MultiSelect = () => {
     const isIncludeValue = optionValues.includes(value);
 
     if (isIncludeValue) {
-      setOptionValues(optionValues.filter((x) => x !== value));
-    } else {
-      setOptionValues(optionValues.concat(value));
+      return setOptionValues(optionValues.filter((x) => x !== value));
     }
+
+    setOptionValues(optionValues.concat(value));
   };
 
   const handleSelectClose = () => {
@@ -115,9 +113,13 @@ export const MultiSelect = () => {
       onSearchInputChange={handleSearchInputChange}
       renderInput={(selected) =>
         selected.map((value) => (
-          <span key={value}>
-            {month.find((month) => month.value === value)?.label}
-          </span>
+          <Chip
+            color="active"
+            variants="pill"
+            key={value}
+            onDelete={handleDelete}
+            label={month.find((month) => month.value === value)?.label}
+          />
         ))
       }
     >
