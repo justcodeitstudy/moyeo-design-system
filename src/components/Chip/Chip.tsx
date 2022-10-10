@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { MouseEventHandler, ReactNode } from "react";
 import styled from "styled-components";
 import { getBackgroundColor, getBorderColor, getColor } from "./style";
 import { CancelIcon } from "../../Icon/svg";
@@ -12,7 +12,7 @@ export interface ChipProps {
   label?: string;
   variants?: Variants;
   outlined?: boolean;
-  onDelete?: (label: string) => void;
+  onDelete?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Chip = ({
@@ -29,7 +29,11 @@ const Chip = ({
     <StyledChip {...props}>
       {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
-      {onDelete && <StyledCancelIcon aria-hidden {...props} />}
+      {onDelete && (
+        <CancelIconBtn value={label} onClick={onDelete}>
+          <StyledCancelIcon aria-hidden {...props} />
+        </CancelIconBtn>
+      )}
     </StyledChip>
   );
 };
@@ -82,4 +86,10 @@ const StyledCancelIcon = styled(CancelIcon)<ChipProps>`
   & path {
     stroke: ${({ color, outlined }) => getColor(color, outlined)};
   }
+`;
+
+const CancelIconBtn = styled.button`
+  border: none;
+  padding: 0;
+  background: none;
 `;
