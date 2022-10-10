@@ -81,10 +81,8 @@ const Carousel = ({
   }, [infiniteLoop, totalLength]);
 
   useEffect(() => {
-    if (isInfinite) {
-      if (currentIndex === 1 || currentIndex === totalLength) {
-        setTransitionEnabled(true);
-      }
+    if (isInfinite && (currentIndex === 1 || currentIndex === totalLength)) {
+      setTransitionEnabled(true);
     }
   }, [currentIndex, isInfinite, totalLength]);
 

@@ -62,23 +62,22 @@ const Indicators = styled.ul<{ indicatorAlign: IndicatorAlign }>`
   display: flex;
   align-items: center;
 
+  bottom: 36px;
+
   ${({ indicatorAlign }) => {
     switch (indicatorAlign) {
       case "left":
         return css`
           left: 0;
-          bottom: 36px;
         `;
       case "center":
         return css`
           left: 50%;
           transform: translate(-50%, 0%);
-          bottom: 36px;
         `;
       case "right":
         return css`
           right: 0;
-          bottom: 36px;
         `;
       default:
         return;
