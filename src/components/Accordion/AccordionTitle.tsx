@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useCallback, useContext } from "react";
 import styled from "styled-components";
 import AccordionContext from "./AccordionContext";
-import { ArrowIcon } from "../../Icon/svg";
+import { ArrowIcon } from "Icon/svg";
 import { Align } from "./Accordion";
 
 type AccordionTitleProps = HTMLAttributes<HTMLDivElement>;

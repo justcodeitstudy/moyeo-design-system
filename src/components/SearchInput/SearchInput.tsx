@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import styled from "styled-components";
-import { SearchIcon } from "../../Icon/svg";
+import { SearchIcon } from "Icon/svg";
 
 export interface SearchInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
