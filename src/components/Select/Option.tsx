@@ -20,16 +20,15 @@ export const Option = forwardRef<HTMLLIElement, OptionProps>(function Option(
       aria-selected={selected}
       value={value}
       onClick={onClick}
+      selected={selected}
       {...rest}
     >
-      <StyledOption value={value} selected={selected}>
-        {children}
-      </StyledOption>
+      <StyledOption value={value}>{children}</StyledOption>
     </OptionContainer>
   );
 });
 
-const OptionContainer = styled("li")`
+const OptionContainer = styled("li")<OptionProps>`
   display: flex;
   height: 16px;
   align-items: center;
@@ -43,14 +42,17 @@ const OptionContainer = styled("li")`
   color: ${({ theme }) => theme.colors.text.primary};
   cursor: pointer;
 
+  ${({ theme, selected }) =>
+    selected &&
+    `
+    ${theme.typography.header4};
+    background: ${theme.colors.primary[400]};
+    color: ${theme.colors.general.white};
+    `}
+
   &:hover {
     background: ${({ theme }) => theme.colors.primary[100]};
-  }
-
-  &:active {
-    ${({ theme }) => theme.typography.header4};
-    background: ${({ theme }) => theme.colors.primary[400]};
-    color: ${({ theme }) => theme.colors.general.white};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 `;
 
