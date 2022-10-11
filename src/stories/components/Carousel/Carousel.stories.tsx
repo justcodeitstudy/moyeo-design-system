@@ -28,7 +28,6 @@ export const Default: Story<CarouselProps> = (args) => {
 };
 
 Default.args = {
-  infiniteLoop: true,
   autoPlay: true,
 };
 

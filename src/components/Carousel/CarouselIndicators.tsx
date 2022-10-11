@@ -8,11 +8,11 @@ import styled, { css } from "styled-components";
 import { IndicatorAlign } from "./Carousel";
 
 interface CarouselDotsProps extends HTMLAttributes<HTMLLIElement> {
-  isInfinite: boolean;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
   totalLength: number;
   indicatorAlign: IndicatorAlign;
+  setTransitionEnabled: Dispatch<SetStateAction<boolean>>;
 }
 
 const CarouselIndicators = ({
@@ -20,18 +20,16 @@ const CarouselIndicators = ({
   currentIndex,
   setCurrentIndex,
   indicatorAlign,
-  isInfinite,
+  setTransitionEnabled,
 }: CarouselDotsProps) => {
   const totalIndexArray = [...Array(totalLength).keys()];
 
   const onClickDotHandler = useCallback(
     (index: number) => {
-      if (isInfinite) {
-        return setCurrentIndex(index + 1);
-      }
-      return setCurrentIndex(index);
+      setTransitionEnabled(true);
+      return setCurrentIndex(index + 1);
     },
-    [isInfinite, setCurrentIndex],
+    [setCurrentIndex, setTransitionEnabled],
   );
 
   return (
@@ -41,8 +39,8 @@ const CarouselIndicators = ({
           key={value}
           role="button"
           aria-label={`dot-${value}`}
-          currentIndex={currentIndex}
-          value={isInfinite ? value + 1 : value}
+          currentIndex={currentIndex - 1}
+          value={value}
           onClick={() => onClickDotHandler(value)}
         />
       ))}

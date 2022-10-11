@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import styled from "styled-components";
@@ -14,7 +15,6 @@ export type IndicatorAlign = "left" | "center" | "right";
 
 export interface CarouselProps {
   children: ReactNode;
-  infiniteLoop?: boolean;
   autoPlay?: boolean;
   autoPlayTime?: number;
   indicatorAlign?: IndicatorAlign;
@@ -24,96 +24,147 @@ export interface CarouselProps {
 
 const Carousel = ({
   children,
-  infiniteLoop = false,
   autoPlay = false,
   autoPlayTime = 3000,
   indicatorAlign = "left",
   width = "100%",
   height = "252px",
 }: CarouselProps) => {
-  const totalLength = Children.toArray(children).length;
+  const totalLength = Children.toArray(children).length + 2;
   const cloneChildren = Children.toArray(children);
 
-  const [currentIndex, setCurrentIndex] = useState(infiniteLoop ? 1 : 0);
-  const [isInfinite, setIsInfinite] = useState(false);
-  const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const contentsRef = useRef<HTMLDivElement>(null);
+
+  const [currentIndex, setCurrentIndex] = useState<number>(1);
+  const [transitionEnabled, setTransitionEnabled] = useState<boolean>(false);
   const [newChildren, setNewChildren] = useState<ReactNode[]>([]);
+  const [drag, setDrag] = useState<boolean>(false);
+  const [mouseMoveX, setMouseMoveX] = useState<number>(0);
+  const [dragX, setDragX] = useState<number>(0);
+  const [contentsWidth, setContentsWidth] = useState<number>(0);
+  const [translateX, setTranslate] = useState<number>(0);
 
   const nextIndex = useCallback(() => {
-    if (isInfinite || currentIndex < totalLength - 1) {
-      return setCurrentIndex(currentIndex + 1);
+    if (currentIndex >= totalLength - 1) {
+      return setCurrentIndex(0);
     }
-    if (!isInfinite) {
-      if (currentIndex >= totalLength - 1) {
-        return setCurrentIndex(0);
-      }
-      return setCurrentIndex(currentIndex + 1);
+    return setCurrentIndex(currentIndex + 1);
+  }, [currentIndex, totalLength]);
+
+  const prevIndex = useCallback(() => {
+    if (currentIndex <= 0) {
+      return setCurrentIndex(0);
     }
-  }, [isInfinite, currentIndex, totalLength]);
+    return setCurrentIndex(currentIndex - 1);
+  }, [currentIndex, totalLength]);
 
   const transitionEndHandler = useCallback(() => {
-    if (isInfinite) {
-      if (currentIndex === 0) {
-        setTransitionEnabled(false);
-        setCurrentIndex(totalLength);
-      } else if (currentIndex === totalLength + 1) {
-        setTransitionEnabled(false);
-        setCurrentIndex(1);
-      }
+    setTransitionEnabled(false);
+    if (currentIndex === 0) {
+      setCurrentIndex(totalLength - 2);
+    } else if (currentIndex === totalLength - 1) {
+      setCurrentIndex(1);
     }
-  }, [isInfinite, currentIndex, totalLength]);
+  }, [autoPlay, currentIndex, totalLength]);
 
-  useEffect(() => {
-    setNewChildren(
-      cloneChildren.map((child) => {
-        return React.cloneElement(child as ReactElement, {
-          style: {
-            minWidth: "100%",
-            display: "inline-block",
-          },
-        });
-      }),
-    );
-  }, []);
-
-  useEffect(() => {
-    setIsInfinite(infiniteLoop && totalLength > 1);
-  }, [infiniteLoop, totalLength]);
-
-  useEffect(() => {
-    if (isInfinite && (currentIndex === 1 || currentIndex === totalLength)) {
+  const autoPlayNextIndex = useCallback(() => {
+    if (currentIndex === totalLength - 2) {
       setTransitionEnabled(true);
+      return setCurrentIndex(1);
     }
-  }, [currentIndex, isInfinite, totalLength]);
+    setTransitionEnabled(true);
+    return setCurrentIndex(currentIndex + 1);
+  }, [currentIndex, totalLength]);
+
+  useEffect(() => {
+    if (contentsRef.current) {
+      setContentsWidth(contentsRef.current.clientWidth);
+    }
+  }, []);
 
   useEffect(() => {
     if (autoPlay) {
       const playNextIndex = setTimeout(() => {
-        nextIndex();
+        autoPlayNextIndex();
       }, autoPlayTime);
 
       return () => {
         clearTimeout(playNextIndex);
-        transitionEndHandler();
       };
     }
-  }, [autoPlay, autoPlayTime, transitionEndHandler, nextIndex]);
+  }, [autoPlay, autoPlayNextIndex]);
 
   useEffect(() => {
-    if (isInfinite && totalLength > 1) {
-      setNewChildren((prevState) => [
-        newChildren[totalLength - 1],
-        ...prevState,
-      ]);
-      setNewChildren((prevState) => [...prevState, newChildren[0]]);
+    const cloneElement = cloneChildren.map((child) => {
+      return React.cloneElement(child as ReactElement, {
+        style: {
+          minWidth: "100%",
+          display: "inline-block",
+        },
+      });
+    });
+    setNewChildren([
+      cloneElement[cloneElement.length - 1],
+      ...cloneElement,
+      cloneElement[0],
+    ]);
+  }, [totalLength]);
+
+  const onMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setDrag(true);
+    setMouseMoveX(e.pageX);
+  }, []);
+
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      if (drag) {
+        setDragX(e.pageX - mouseMoveX);
+
+        setTranslate(() => {
+          if (dragX < -contentsWidth) {
+            return -contentsWidth;
+          }
+          if (dragX > contentsWidth) {
+            return contentsWidth;
+          }
+          return dragX;
+        });
+      }
+    },
+    [dragX, contentsWidth, drag, mouseMoveX],
+  );
+
+  const onMouseUp = useCallback(() => {
+    setDrag(false);
+
+    if (dragX < -(contentsWidth / 2)) {
+      nextIndex();
     }
-  }, [isInfinite, totalLength]);
+    if (dragX > contentsWidth / 2) {
+      prevIndex();
+    }
+
+    setTransitionEnabled(true);
+    setTranslate(0);
+  }, [dragX, contentsWidth, nextIndex, prevIndex]);
+
+  const onMouseLeave = useCallback(() => {
+    setDrag(false);
+  }, []);
 
   return (
-    <CarouselContents width={width} height={height}>
+    <CarouselContents ref={contentsRef} width={width} height={height}>
       <CarouselItems
         currentIndex={currentIndex}
         transitionEnabled={transitionEnabled}
+        contentsWidth={contentsWidth}
+        translateX={translateX}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
         onTransitionEnd={transitionEndHandler}
       >
         {newChildren.map((child, index) => (
@@ -122,11 +173,11 @@ const Carousel = ({
       </CarouselItems>
       {totalLength > 1 && (
         <CarouselIndicators
-          isInfinite={isInfinite}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
-          totalLength={totalLength}
+          totalLength={totalLength - 2}
           indicatorAlign={indicatorAlign}
+          setTransitionEnabled={setTransitionEnabled}
         />
       )}
     </CarouselContents>
@@ -143,12 +194,13 @@ const CarouselContents = styled.div<{ width: string; height: string }>`
   width: ${({ width }) => width && width};
   height: ${({ height }) => height && height};
 
-  user-select: none;
   cursor: pointer;
 `;
 
 const CarouselItems = styled.div<{
   currentIndex: number;
+  contentsWidth: number;
+  translateX: number;
   transitionEnabled: boolean;
 }>`
   display: flex;
@@ -157,12 +209,13 @@ const CarouselItems = styled.div<{
 
   list-style: none;
 
-  transform: ${({ currentIndex }) =>
-    `translate3d(-${currentIndex}00%, 0px, 0px)`};
-
+  transform: ${({ currentIndex, contentsWidth, translateX }) =>
+    `translate3D(${-currentIndex * contentsWidth + translateX}px, 0px, 0px)`};
   transition: ${({ transitionEnabled }) =>
     transitionEnabled && `all 0.4s ease`};
 
   margin: 0;
   padding: 0;
+
+  user-select: none;
 `;
