@@ -29,4 +29,5 @@ export const Default: Story<ModalProps> = (args) => {
 Default.args = {
   opened: false,
   blockEscClose: false,
+  dim: "black",
 };

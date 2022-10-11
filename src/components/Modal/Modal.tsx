@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect } from "react";
 import { HTMLAttributes } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, FlattenSimpleInterpolation } from "styled-components";
 import ModalContent from "./ModalContent";
 import ModalPortal from "./ModalPortal";
 
+export type ModalDim = "blur" | "black";
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   opened: boolean;
   onClose: () => void;
+  dim?: ModalDim;
 
   /**
    * ESC 키로 닫는 기능을 막는 옵션입니다.
@@ -14,7 +16,18 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   blockEscClose?: boolean;
 }
 
-type ModalContainerProps = Pick<ModalProps, "opened">;
+const modalContainerDim: Record<ModalDim, FlattenSimpleInterpolation> = {
+  blur: css`
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10.5px);
+  `,
+  black: css`
+    background-color: rgba(217, 217, 217, 0.5);
+    background-blend-mode: multiply;
+  `,
+};
+
+type ModalContainerProps = Required<Pick<ModalProps, "opened" | "dim">>;
 const ModalContainer = styled.div<ModalContainerProps>`
   width: 100%;
   height: 100%;
@@ -23,8 +36,10 @@ const ModalContainer = styled.div<ModalContainerProps>`
   top: 0;
   left: 0;
 
-  background-color: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10.5px);
+  ${({ dim }) =>
+    css`
+      ${modalContainerDim[dim]}
+    `}
 
   transition: 0.2s;
   transition-property: opacity, visibility;
@@ -47,6 +62,7 @@ const Modal = ({
   opened = false,
   onClose,
   blockEscClose = false,
+  dim = "black",
   ...props
 }: ModalProps) => {
   const onKeydownClose = useCallback(
@@ -78,6 +94,7 @@ const Modal = ({
         role="dialog"
         aria-hidden={!opened}
         opened={opened}
+        dim={dim}
         {...props}
         onClick={(event) => {
           props.onClick?.(event);
