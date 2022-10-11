@@ -17,7 +17,7 @@ export const Default: Story<ModalProps> = (args) => {
   return (
     <>
       <button onClick={() => setOpened(true)}>Modal 열기</button>
-      <Modal opened={opened} onClose={() => setOpened(false)}>
+      <Modal {...args} opened={opened} onClose={() => setOpened(false)}>
         <Modal.Content>
           <button onClick={() => setOpened(false)}>Modal 닫기</button>
           모달 내용
@@ -28,4 +28,5 @@ export const Default: Story<ModalProps> = (args) => {
 };
 Default.args = {
   opened: false,
+  blockEscClose: false,
 };

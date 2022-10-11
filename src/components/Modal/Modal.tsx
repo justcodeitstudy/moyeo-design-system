@@ -7,6 +7,11 @@ import ModalPortal from "./ModalPortal";
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   opened: boolean;
   onClose: () => void;
+
+  /**
+   * ESC 키로 닫는 기능을 막는 옵션입니다.
+   */
+  blockEscClose?: boolean;
 }
 
 type ModalContainerProps = Pick<ModalProps, "opened">;
@@ -37,7 +42,13 @@ const ModalContainer = styled.div<ModalContainerProps>`
         `}
 `;
 
-const Modal = ({ children, opened = false, onClose, ...props }: ModalProps) => {
+const Modal = ({
+  children,
+  opened = false,
+  onClose,
+  blockEscClose = false,
+  ...props
+}: ModalProps) => {
   const onKeydownClose = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {
@@ -52,14 +63,14 @@ const Modal = ({ children, opened = false, onClose, ...props }: ModalProps) => {
       onClose();
     }
 
-    if (opened) {
+    if (opened && !blockEscClose) {
       window.addEventListener("keyup", onKeydownClose);
 
       return () => {
         window.removeEventListener("keyup", onKeydownClose);
       };
     }
-  }, [opened]);
+  }, [opened, blockEscClose]);
 
   return (
     <ModalPortal opened={opened}>
