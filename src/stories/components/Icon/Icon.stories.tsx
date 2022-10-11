@@ -14,4 +14,5 @@ export const Default: Story<IconProps> = (props) => {
 Default.args = {
   name: "add",
   size: 24,
+  color: "#000",
 };
