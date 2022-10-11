@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import React, { useCallback, useState } from "react";
-import { Tabs } from "../../../components/Tabs";
+import { Tabs } from "components/Tabs";
 
 export default {
   title: "Components/Tab",

@@ -1,6 +1,6 @@
 {
   "name": "jci-moyeo-design-system",
-  "version": "0.1.1",
+  "version": "0.1.7",
   "homepage": "justcodeitstudy.github.io/moyeo-design-system",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",

@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react";
 import {
   SearchInput as SearchInputBase,
   SearchInputProps,
-} from "../../../components/SearchInput";
+} from "components/SearchInput";
 import React from "react";
 
 export default {
