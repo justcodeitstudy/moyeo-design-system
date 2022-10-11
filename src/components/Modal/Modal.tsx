@@ -6,7 +6,7 @@ import ModalPortal from "./ModalPortal";
 
 export type ModalDim = "blur" | "black";
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-  opened: boolean;
+  isOpen: boolean;
   onClose: () => void;
   dim?: ModalDim;
 
@@ -27,7 +27,7 @@ const modalContainerDim: Record<ModalDim, FlattenSimpleInterpolation> = {
   `,
 };
 
-type ModalContainerProps = Required<Pick<ModalProps, "opened" | "dim">>;
+type ModalContainerProps = Required<Pick<ModalProps, "isOpen" | "dim">>;
 const ModalContainer = styled.div<ModalContainerProps>`
   width: 100%;
   height: 100%;
@@ -44,8 +44,8 @@ const ModalContainer = styled.div<ModalContainerProps>`
   transition: 0.2s;
   transition-property: opacity, visibility;
 
-  ${({ opened }) =>
-    opened
+  ${({ isOpen }) =>
+    isOpen
       ? css`
           opacity: 1;
           visibility: visible;
@@ -59,7 +59,7 @@ const ModalContainer = styled.div<ModalContainerProps>`
 
 const Modal = ({
   children,
-  opened = false,
+  isOpen = false,
   onClose,
   blockEscClose = false,
   dim = "black",
@@ -75,25 +75,25 @@ const Modal = ({
   );
 
   useEffect(() => {
-    if (!opened) {
+    if (!isOpen) {
       onClose();
     }
 
-    if (opened && !blockEscClose) {
+    if (isOpen && !blockEscClose) {
       window.addEventListener("keyup", onKeydownClose);
 
       return () => {
         window.removeEventListener("keyup", onKeydownClose);
       };
     }
-  }, [opened, blockEscClose]);
+  }, [isOpen, blockEscClose]);
 
   return (
-    <ModalPortal opened={opened}>
+    <ModalPortal isOpen={isOpen}>
       <ModalContainer
         role="dialog"
-        aria-hidden={!opened}
-        opened={opened}
+        aria-hidden={!isOpen}
+        isOpen={isOpen}
         dim={dim}
         {...props}
         onClick={(event) => {

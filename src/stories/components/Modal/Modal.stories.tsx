@@ -11,13 +11,13 @@ export const Default: Story<ModalProps> = (args) => {
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
-    setOpened(args.opened);
-  }, [args.opened]);
+    setOpened(args.isOpen);
+  }, [args.isOpen]);
 
   return (
     <>
       <button onClick={() => setOpened(true)}>Modal 열기</button>
-      <Modal {...args} opened={opened} onClose={() => setOpened(false)}>
+      <Modal {...args} isOpen={opened} onClose={() => setOpened(false)}>
         <Modal.Content>
           <button onClick={() => setOpened(false)}>Modal 닫기</button>
           모달 내용
@@ -27,7 +27,7 @@ export const Default: Story<ModalProps> = (args) => {
   );
 };
 Default.args = {
-  opened: false,
+  isOpen: false,
   blockEscClose: false,
   dim: "black",
 };
