@@ -1,18 +1,18 @@
-import React, { MouseEventHandler, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { getBackgroundColor, getBorderColor, getColor } from "./style";
 import { CancelIcon } from "../../Icon/svg";
 
 export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
-
 export interface ChipProps {
   color: Color;
   adornments?: ReactNode;
   label?: string;
   variants?: Variants;
   outlined?: boolean;
-  onDelete?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onDelete?: (e: React.MouseEvent<HTMLDivElement>, label?: string) => void;
 }
 
 const Chip = ({
@@ -21,16 +21,29 @@ const Chip = ({
   color = "basic",
   variants,
   outlined,
+  onClick,
   onDelete,
 }: ChipProps) => {
   const props = { color, variants, outlined };
 
+  const handleChipClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onClick?.(e);
+  };
+
+  const handleDelete = (
+    e: React.MouseEvent<HTMLDivElement> & React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.stopPropagation();
+    onDelete?.(e, label);
+  };
+
   return (
-    <StyledChip {...props}>
+    <StyledChip {...props} onClick={handleChipClick}>
       {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
       {onDelete && (
-        <CancelIconBtn value={label} onClick={onDelete}>
+        <CancelIconBtn value={label} onClick={handleDelete}>
           <StyledCancelIcon aria-hidden {...props} />
         </CancelIconBtn>
       )}
