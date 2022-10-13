@@ -12,8 +12,8 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "dist/types"
+    "declarationDir": "dist/types",
+    "baseUrl": "src"
   },
-  "include": ["src"],
-  "exclude": ["**/*.stories.tsx"]
+  "include": ["src"]
 }

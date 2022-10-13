@@ -1,6 +1,7 @@
 {
   "name": "jci-moyeo-design-system",
-  "version": "0.1.1",
+  "version": "0.1.7",
+  "homepage": "justcodeitstudy.github.io/moyeo-design-system",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -15,7 +16,9 @@
   "scripts": {
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly"
+    "build": "rm -rf dist && rollup -c && tsc --emitDeclarationOnly",
+    "predeploy": "rm -rf storybook-static && build-storybook",
+    "deploy": "gh-pages -d storybook-static"
   },
   "eslintConfig": {
     "extends": [
@@ -74,6 +77,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^4.0.0",
+    "pretendard": "^1.3.5",
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
     "prop-types": "^15.8.1",
@@ -87,6 +92,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-url": "^3.0.1",
     "styled-components": "^5.3.6",
+    "styled-reset": "^4.4.2",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "webpack": "^5.74.0"
