@@ -10,6 +10,8 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import CarouselIndicators from "./CarouselIndicators";
+import { useResizeEffect } from "../../utils";
+import { carouselDrag } from "../../utils/carouselDrag";
 
 export type IndicatorAlign = "left" | "center" | "right";
 
@@ -38,11 +40,16 @@ const Carousel = ({
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [transitionEnabled, setTransitionEnabled] = useState<boolean>(false);
   const [newChildren, setNewChildren] = useState<ReactNode[]>([]);
-  const [drag, setDrag] = useState<boolean>(false);
-  const [mouseMoveX, setMouseMoveX] = useState<number>(0);
-  const [dragX, setDragX] = useState<number>(0);
   const [contentsWidth, setContentsWidth] = useState<number>(0);
   const [translateX, setTranslate] = useState<number>(0);
+
+  const resizeContentsWidth = useCallback(() => {
+    if (contentsRef.current) {
+      setContentsWidth(contentsRef.current.clientWidth);
+    }
+  }, []);
+
+  useResizeEffect(resizeContentsWidth);
 
   const nextIndex = useCallback(() => {
     if (currentIndex >= totalLength - 1) {
@@ -110,50 +117,6 @@ const Carousel = ({
     ]);
   }, [totalLength]);
 
-  const onMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    setDrag(true);
-    setMouseMoveX(e.pageX);
-  }, []);
-
-  const onMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      if (drag) {
-        setDragX(e.pageX - mouseMoveX);
-
-        setTranslate(() => {
-          if (dragX < -contentsWidth) {
-            return -contentsWidth;
-          }
-          if (dragX > contentsWidth) {
-            return contentsWidth;
-          }
-          return dragX;
-        });
-      }
-    },
-    [dragX, contentsWidth, drag, mouseMoveX],
-  );
-
-  const onMouseUp = useCallback(() => {
-    setDrag(false);
-
-    if (dragX < -(contentsWidth / 2)) {
-      nextIndex();
-    }
-    if (dragX > contentsWidth / 2) {
-      prevIndex();
-    }
-
-    setTransitionEnabled(true);
-    setTranslate(0);
-  }, [dragX, contentsWidth, nextIndex, prevIndex]);
-
-  const onMouseLeave = useCallback(() => {
-    setDrag(false);
-  }, []);
-
   return (
     <CarouselContents ref={contentsRef} width={width} height={height}>
       <CarouselItems
@@ -161,11 +124,14 @@ const Carousel = ({
         transitionEnabled={transitionEnabled}
         contentsWidth={contentsWidth}
         translateX={translateX}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
         onTransitionEnd={transitionEndHandler}
+        {...carouselDrag({
+          contentsWidth,
+          nextIndex,
+          prevIndex,
+          setTransitionEnabled,
+          setTranslate,
+        })}
       >
         {newChildren.map((child, index) => (
           <Fragment key={`carousel-${index}`}>{child}</Fragment>
