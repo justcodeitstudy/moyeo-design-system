@@ -6,3 +6,4 @@ export { Card } from "components/Card";
 export { SearchInput } from "components/SearchInput";
 export { Tabs } from "components/Tabs";
 export { TextInput } from "components/TextInput";
+export * from "./components/Modal";
