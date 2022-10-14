@@ -61,12 +61,15 @@ export const Select = <Multiple extends boolean = false>({
     [],
   );
 
-  const isSelected = (currentValue: string) => {
-    if (isMulti) {
-      return value.includes(currentValue);
-    }
-    return value === currentValue;
-  };
+  const isSelected = useCallback(
+    (currentValue: string) => {
+      if (isMulti) {
+        return value.includes(currentValue);
+      }
+      return value === currentValue;
+    },
+    [isMulti, value],
+  );
 
   const updateValue = (selectedValue: string) => {
     let changedValue: string[] | string = selectedValue;
