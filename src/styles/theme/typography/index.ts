@@ -55,5 +55,3 @@ const typography = {
 };
 
 export default typography;
-
-export * from "./Typography";

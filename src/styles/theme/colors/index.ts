@@ -101,5 +101,3 @@ const colors = {
 };
 
 export default colors;
-
-export * from "./ColorPalette";
