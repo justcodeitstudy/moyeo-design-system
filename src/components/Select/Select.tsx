@@ -10,6 +10,7 @@ import { Option, OptionProps } from "./Option";
 import { TextInput, TextInputProps } from "components/TextInput";
 import { Popover } from "components/Popover";
 import { isSameComponent, useResizeEffect } from "utils";
+import { Icon } from "components/Icon";
 
 export interface SelectProps<Multiple extends boolean = false> {
   value: Multiple extends true ? string[] : string;
@@ -196,8 +197,7 @@ export const Select = <Multiple extends boolean = false>({
       hasValue={!!value}
     >
       {inputContent}
-      {/* TODO: icon 컴포넌트로 수정 */}
-      <IconContainer>↓</IconContainer>
+      <Icon name="down" />
     </StyledInputContainer>
   );
 
