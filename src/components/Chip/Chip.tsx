@@ -100,6 +100,7 @@ const StyledCancelIconContainer = styled.div`
   background: none;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const StyledCancelIcon = styled(Icon)<ChipProps>`
