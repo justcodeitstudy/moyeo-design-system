@@ -60,7 +60,7 @@ const iconList = {
       strokeLinejoin="round"
     />
   ),
-  cancleWithCircle: (
+  cancelWithCircle: (
     <path
       fillRule="evenodd"
       clipRule="evenodd"
