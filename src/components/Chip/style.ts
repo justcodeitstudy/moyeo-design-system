@@ -1,4 +1,4 @@
-import { Theme } from "../../styles/theme";
+import Theme from "styles/theme";
 import { Color } from "./Chip";
 
 const getOutLineColor = (color: Color) => {
