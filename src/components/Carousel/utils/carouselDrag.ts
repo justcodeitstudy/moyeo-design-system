@@ -1,5 +1,5 @@
 import { isMobile } from "./checkMobile";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 interface CarouselDragProps {
   contentsWidth: number;
@@ -7,6 +7,8 @@ interface CarouselDragProps {
   prevIndex: () => void;
   setTransitionEnabled: Dispatch<SetStateAction<boolean>>;
   setTranslate: Dispatch<SetStateAction<number>>;
+  drag: boolean;
+  setDrag: Dispatch<SetStateAction<boolean>>;
 }
 
 export const carouselDrag = ({
@@ -15,10 +17,21 @@ export const carouselDrag = ({
   prevIndex,
   setTransitionEnabled,
   setTranslate,
+  drag,
+  setDrag,
 }: CarouselDragProps) => {
-  const [drag, setDrag] = useState<boolean>(false);
   const [mouseMoveX, setMouseMoveX] = useState<number>(0);
   const [dragX, setDragX] = useState<number>(0);
+
+  const translateHandler = useCallback(() => {
+    if (dragX < -contentsWidth) {
+      return -contentsWidth;
+    }
+    if (dragX > contentsWidth) {
+      return contentsWidth;
+    }
+    return dragX;
+  }, [dragX, contentsWidth]);
 
   if (isMobile) {
     return {
@@ -44,19 +57,12 @@ export const carouselDrag = ({
         if (drag) {
           setDragX(e.changedTouches[0].pageX - mouseMoveX);
 
-          setTranslate(() => {
-            if (dragX < -contentsWidth) {
-              return -contentsWidth;
-            }
-            if (dragX > contentsWidth) {
-              return contentsWidth;
-            }
-            return dragX;
-          });
+          setTranslate(translateHandler);
         }
       },
       onTouchCancel: () => {
         setDrag(false);
+        setTranslate(0);
       },
     };
   }
@@ -84,19 +90,12 @@ export const carouselDrag = ({
       if (drag) {
         setDragX(e.pageX - mouseMoveX);
 
-        setTranslate(() => {
-          if (dragX < -contentsWidth) {
-            return -contentsWidth;
-          }
-          if (dragX > contentsWidth) {
-            return contentsWidth;
-          }
-          return dragX;
-        });
+        setTranslate(translateHandler);
       }
     },
     onMouseLeave: () => {
       setDrag(false);
+      setTranslate(0);
     },
   };
 };

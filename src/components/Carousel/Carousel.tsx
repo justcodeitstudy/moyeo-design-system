@@ -11,7 +11,7 @@ import React, {
 import styled from "styled-components";
 import CarouselIndicators from "./CarouselIndicators";
 import { useResizeEffect } from "../../utils";
-import { carouselDrag } from "../../utils/carouselDrag";
+import { carouselDrag } from "./utils/carouselDrag";
 
 export type IndicatorAlign = "left" | "center" | "right";
 
@@ -22,6 +22,13 @@ export interface CarouselProps {
   indicatorAlign?: IndicatorAlign;
   width?: string;
   height?: string;
+}
+
+interface CarouselStyledProps {
+  currentIndex: number;
+  contentsWidth: number;
+  translateX: number;
+  transitionEnabled: boolean;
 }
 
 const Carousel = ({
@@ -42,6 +49,7 @@ const Carousel = ({
   const [newChildren, setNewChildren] = useState<ReactNode[]>([]);
   const [contentsWidth, setContentsWidth] = useState<number>(0);
   const [translateX, setTranslate] = useState<number>(0);
+  const [drag, setDrag] = useState<boolean>(false);
 
   const resizeContentsWidth = useCallback(() => {
     if (contentsRef.current) {
@@ -55,32 +63,34 @@ const Carousel = ({
     if (currentIndex >= totalLength - 1) {
       return setCurrentIndex(0);
     }
-    return setCurrentIndex(currentIndex + 1);
+    return setCurrentIndex((prevCurrentIndex) => prevCurrentIndex + 1);
   }, [currentIndex, totalLength]);
 
   const prevIndex = useCallback(() => {
     if (currentIndex <= 0) {
       return setCurrentIndex(0);
     }
-    return setCurrentIndex(currentIndex - 1);
+    return setCurrentIndex((prevCurrentIndex) => prevCurrentIndex - 1);
   }, [currentIndex, totalLength]);
 
   const transitionEndHandler = useCallback(() => {
     setTransitionEnabled(false);
     if (currentIndex === 0) {
-      setCurrentIndex(totalLength - 2);
-    } else if (currentIndex === totalLength - 1) {
-      setCurrentIndex(1);
+      return setCurrentIndex(totalLength - 2);
     }
-  }, [autoPlay, currentIndex, totalLength]);
+    if (currentIndex === totalLength - 1) {
+      return setCurrentIndex(1);
+    }
+  }, [currentIndex, totalLength]);
 
   const autoPlayNextIndex = useCallback(() => {
     if (currentIndex === totalLength - 2) {
       setTransitionEnabled(true);
-      return setCurrentIndex(1);
+      setCurrentIndex(1);
+    } else {
+      setTransitionEnabled(true);
+      setCurrentIndex((prevCurrentIndex) => prevCurrentIndex + 1);
     }
-    setTransitionEnabled(true);
-    return setCurrentIndex(currentIndex + 1);
   }, [currentIndex, totalLength]);
 
   useEffect(() => {
@@ -95,11 +105,15 @@ const Carousel = ({
         autoPlayNextIndex();
       }, autoPlayTime);
 
+      if (drag) {
+        clearTimeout(playNextIndex);
+      }
+
       return () => {
         clearTimeout(playNextIndex);
       };
     }
-  }, [autoPlay, autoPlayNextIndex]);
+  }, [autoPlay, drag, autoPlayNextIndex]);
 
   useEffect(() => {
     const cloneElement = cloneChildren.map((child) => {
@@ -131,6 +145,8 @@ const Carousel = ({
           prevIndex,
           setTransitionEnabled,
           setTranslate,
+          drag,
+          setDrag,
         })}
       >
         {newChildren.map((child, index) => (
@@ -163,22 +179,21 @@ const CarouselContents = styled.div<{ width: string; height: string }>`
   cursor: pointer;
 `;
 
-const CarouselItems = styled.div<{
-  currentIndex: number;
-  contentsWidth: number;
-  translateX: number;
-  transitionEnabled: boolean;
-}>`
+const CarouselItems = styled.div.attrs<CarouselStyledProps>(
+  ({ currentIndex, contentsWidth, translateX, transitionEnabled }) => ({
+    style: {
+      transform: `translate3D(${
+        -currentIndex * contentsWidth + translateX
+      }px, 0px, 0px)`,
+      transition: transitionEnabled ? "all 0.4s ease" : undefined,
+    },
+  }),
+)<CarouselStyledProps>`
   display: flex;
 
   height: 100%;
 
   list-style: none;
-
-  transform: ${({ currentIndex, contentsWidth, translateX }) =>
-    `translate3D(${-currentIndex * contentsWidth + translateX}px, 0px, 0px)`};
-  transition: ${({ transitionEnabled }) =>
-    transitionEnabled && `all 0.4s ease`};
 
   margin: 0;
   padding: 0;
