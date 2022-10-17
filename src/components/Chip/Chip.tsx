@@ -1,3 +1,4 @@
+import { Icon } from "components/Icon";
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 import {
@@ -6,7 +7,6 @@ import {
   getCancelIconColor,
   getColor,
 } from "./style";
-import { Icon } from "components/Icon";
 
 export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
@@ -18,6 +18,7 @@ export interface ChipProps {
   outlined?: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onDelete?: (e: React.MouseEvent<HTMLDivElement>, label?: string) => void;
+  deleteIcon?: React.ReactNode;
 }
 
 const Chip = ({
@@ -28,6 +29,7 @@ const Chip = ({
   outlined,
   onClick,
   onDelete,
+  deleteIcon = <Icon name="cancel" />,
 }: ChipProps) => {
   const props = { color, variants, outlined };
 
@@ -36,9 +38,7 @@ const Chip = ({
     onClick?.(e);
   };
 
-  const handleDelete = (
-    e: React.MouseEvent<HTMLDivElement> & React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     onDelete?.(e, label);
   };
@@ -48,8 +48,8 @@ const Chip = ({
       {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
       {onDelete && (
-        <StyledCancelIconContainer onClick={handleDelete}>
-          <StyledCancelIcon name="cancel" size={12} {...props} />
+        <StyledCancelIconContainer onClick={handleDelete} {...props}>
+          {deleteIcon}
         </StyledCancelIconContainer>
       )}
     </StyledChip>
@@ -94,15 +94,15 @@ const StyledChipAdornments = styled.span`
   align-items: center;
 `;
 
-const StyledCancelIconContainer = styled.div`
+const StyledCancelIconContainer = styled.div<ChipProps>`
   border: none;
   padding: 0;
   background: none;
   display: flex;
   align-items: center;
   cursor: pointer;
-`;
 
-const StyledCancelIcon = styled(Icon)<ChipProps>`
-  color: ${({ color, outlined }) => getCancelIconColor(color, outlined)};
+  svg {
+    color: ${({ color, outlined }) => getCancelIconColor(color, outlined)};
+  }
 `;
