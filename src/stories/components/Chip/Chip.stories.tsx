@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react";
+import { Icon } from "components/Icon";
 import React from "react";
 import { Chip, ChipProps } from "../../../components/Chip";
-import { CancelIcon } from "../../../Icon/svg";
 
 export default {
   title: "Components/Chip",
@@ -9,5 +9,5 @@ export default {
 } as Meta;
 
 export const Default: Story<ChipProps> = (args) => {
-  return <Chip {...args} />;
+  return <Chip {...args} deleteIcon={<Icon name="cancel" size={12} />} />;
 };
