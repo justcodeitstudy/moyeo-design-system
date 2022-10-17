@@ -1,9 +1,9 @@
 import "styled-components";
-import { Theme as theme } from "./theme";
+import Theme from "./theme";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colors: typeof theme.colors;
-    typography: typeof theme.typography;
+    colors: typeof Theme.colors;
+    typography: typeof Theme.typography;
   }
 }

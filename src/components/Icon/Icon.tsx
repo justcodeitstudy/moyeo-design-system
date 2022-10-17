@@ -1,6 +1,6 @@
 import React from "react";
 import { SVGAttributes } from "react";
-import { Theme } from "../../styles/theme";
+import { Theme } from "styles/theme";
 import iconList from "./iconList";
 
 export type IconName = keyof typeof iconList;

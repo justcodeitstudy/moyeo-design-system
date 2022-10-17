@@ -7,3 +7,7 @@ export { SearchInput } from "components/SearchInput";
 export { Tabs } from "components/Tabs";
 export { TextInput } from "components/TextInput";
 export * from "./components/Modal";
+
+// theme
+export { GlobalStyle } from "styles/global";
+export { Theme } from "styles/theme";
