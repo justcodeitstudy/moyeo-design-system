@@ -20,6 +20,7 @@ export interface SelectProps<Multiple extends boolean = false> {
   children: React.ReactNode;
   inputProps?: TextInputProps;
   placeholder?: string;
+  width?: string;
   onSelect?: (value: string) => void;
   onChange?: (value: Multiple extends true ? string[] : string) => void;
   onClose?: () => void;
@@ -38,6 +39,7 @@ export const Select = <Multiple extends boolean = false>({
   inputProps,
   disabled = false,
   placeholder,
+  width,
 }: SelectProps<Multiple>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -193,6 +195,7 @@ export const Select = <Multiple extends boolean = false>({
       onClick={openOptionDrawer}
       placeholder={placeholder}
       hasValue={!!value}
+      width={width}
     >
       {inputContent}
       <IconContainer>
@@ -210,20 +213,20 @@ export const Select = <Multiple extends boolean = false>({
   );
 
   return (
-    <>
+    <StyledContainer>
       {label && <StyledLabelText>{label}</StyledLabelText>}
       <Popover
         isOpen={isOpen}
         anchorPosition={{
           x: 0,
-          y: 5,
+          y: 4,
         }}
         onClose={closeOptionDrawer}
         opener={select}
       >
         {optionDrawer}
       </Popover>
-    </>
+    </StyledContainer>
   );
 };
 
@@ -232,14 +235,18 @@ const StyledLabelText = styled("label")`
   color: ${({ theme }) => theme.colors.text.primary};
 `;
 
+const StyledContainer = styled("div")``;
+
 const StyledInputContainer = styled("div")<{
   active: boolean;
   disabled: boolean;
   hasValue: boolean;
+  width?: string;
 }>`
   display: flex;
   align-items: center;
   position: relative;
+  width: ${({ width }) => width};
   min-height: 22px;
   padding: 12px;
   border: 1px solid ${({ theme }) => theme.colors.general[300]};
