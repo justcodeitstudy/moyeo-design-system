@@ -1,44 +1,44 @@
 const header1 = {
-  fontSize: "32px",
-  fontWeight: "700",
-  lineHeight: "40px",
+  "font-size": "32px",
+  "font-weight": "700",
+  "line-height": "40px",
 };
 
 const header2 = {
-  fontSize: "24px",
-  fontWeight: "600",
-  lineHeight: "32px",
+  "font-size": "24px",
+  "font-weight": "600",
+  "line-height": "32px",
 };
 
 const header3 = {
-  fontSize: "20px",
-  fontWeight: "500",
-  lineHeight: "28px",
+  "font-size": "20px",
+  "font-weight": "500",
+  "line-height": "28px",
 };
 const header4 = {
-  fontSize: "16px",
-  fontWeight: "500",
-  lineHeight: "24px",
+  "font-size": "16px",
+  "font-weight": "500",
+  "line-height": "24px",
 };
 const lg = {
-  fontSize: "20px",
-  fontWeight: "400",
-  lineHeight: "28px",
+  "font-size": "20px",
+  "font-weight": "400",
+  "line-height": "28px",
 };
 const md = {
-  fontSize: "16px",
-  fontWeight: "400",
-  lineHeight: "24px",
+  "font-size": "16px",
+  "font-weight": "400",
+  "line-height": "24px",
 };
 const sm = {
-  fontSize: "14px",
-  fontWeight: "400",
-  lineHeight: "22px",
+  "font-size": "14px",
+  "font-weight": "400",
+  "line-height": "22px",
 };
 const xs = {
-  fontSize: "12px",
-  fontWeight: "400",
-  lineHeight: "20px",
+  "font-size": "12px",
+  "font-weight": "400",
+  "line-height": "20px",
 };
 
 const typography = {
