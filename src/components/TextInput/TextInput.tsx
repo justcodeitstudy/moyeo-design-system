@@ -32,7 +32,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <>
+      <Container {...rest}>
         {label && <StyledLabelText htmlFor={name}>{label}</StyledLabelText>}
         <StyledTextInputContainer>
           <StyledTextInput
@@ -44,7 +44,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             width={width}
             status={status}
             onChange={handleInput}
-            {...rest}
           />
         </StyledTextInputContainer>
         {message && (
@@ -52,10 +51,12 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             {message}
           </StyledDescriptionText>
         )}
-      </>
+      </Container>
     );
   },
 );
+
+const Container = styled("div")``;
 
 const StyledTextInputContainer = styled("div")`
   display: flex;
@@ -92,7 +93,7 @@ const StyledTextInput = styled("input")<TextInputProps>`
   ${({ status }) => status && inputStyle[status]}
 `;
 
-const StyledDescriptionText = styled("caption")<Pick<TextInputProps, "status">>`
+const StyledDescriptionText = styled("span")<Pick<TextInputProps, "status">>`
   display: flex;
   align-items: center;
   margin: 6px 0 0 2px;
@@ -106,5 +107,5 @@ const StyledLabelText = styled("label")`
   align-items: center;
   margin: 0 0 6px 2px;
   color: ${({ theme }) => theme.colors.black[400]};
-  ${({ theme }) => theme.typography.sm};
+  ${({ theme }) => theme.typography.header4};
 `;
