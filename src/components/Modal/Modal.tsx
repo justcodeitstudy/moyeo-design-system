@@ -65,6 +65,14 @@ const Modal = ({
   dim = "black",
   ...props
 }: ModalProps) => {
+  const isServerSide = () => {
+    return typeof window === "undefined";
+  };
+
+  if (isServerSide()) {
+    return null;
+  }
+
   const onKeydownClose = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {

@@ -168,6 +168,14 @@ export const Select = <Multiple extends boolean = false>({
     setSearchKeyword(e.target.value);
   };
 
+  const isServerSide = () => {
+    return typeof window === "undefined";
+  };
+
+  if (isServerSide()) {
+    return null;
+  }
+
   const inputContent =
     isMulti && Array.isArray(value) ? (
       <TextInputOverride

@@ -131,6 +131,14 @@ const Carousel = ({
     ]);
   }, [totalLength]);
 
+  const isServerSide = () => {
+    return typeof window === "undefined";
+  };
+
+  if (isServerSide()) {
+    return null;
+  }
+
   return (
     <CarouselContents ref={contentsRef} width={width} height={height}>
       <CarouselItems

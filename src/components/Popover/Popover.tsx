@@ -94,6 +94,14 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
 
     const containerRef = useRef<HTMLDivElement>(null);
 
+    const isServerSide = () => {
+      return typeof window === "undefined";
+    };
+
+    if (isServerSide()) {
+      return null;
+    }
+
     if (!document.body) {
       throw new Error("document.body is not defined");
     }

@@ -1,9 +1,6 @@
 import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
 
-export default createGlobalStyle`
-  ${reset}
-
+export const GlobalStyle = createGlobalStyle`
   body {
     font-family: Pretendard, sans-serif;
   }
