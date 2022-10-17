@@ -1,6 +1,14 @@
 {
   "name": "jci-moyeo-design-system",
   "version": "0.1.11",
+  "keywords": [
+    "component",
+    "design",
+    "framework",
+    "react",
+    "react-component",
+    "ui"
+  ],
   "homepage": "justcodeitstudy.github.io/moyeo-design-system",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
