@@ -1,7 +1,12 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
-import { getBackgroundColor, getBorderColor, getColor } from "./style";
-import { CancelIcon } from "../../Icon/svg";
+import {
+  getBackgroundColor,
+  getBorderColor,
+  getCancelIconColor,
+  getColor,
+} from "./style";
+import { Icon } from "components/Icon";
 
 export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
@@ -43,9 +48,9 @@ const Chip = ({
       {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
       {onDelete && (
-        <CancelIconBtn value={label} onClick={handleDelete}>
-          <StyledCancelIcon aria-hidden {...props} />
-        </CancelIconBtn>
+        <StyledCancelIconContainer onClick={handleDelete}>
+          <StyledCancelIcon name="cancel" size={12} {...props} />
+        </StyledCancelIconContainer>
       )}
     </StyledChip>
   );
@@ -89,20 +94,15 @@ const StyledChipAdornments = styled.span`
   align-items: center;
 `;
 
-const StyledCancelIcon = styled(CancelIcon)<ChipProps>`
-  cursor: pointer;
-
-  height: 100%;
-  display: flex;
-  align-items: center;
-
-  & path {
-    stroke: ${({ color, outlined }) => getColor(color, outlined)};
-  }
-`;
-
-const CancelIconBtn = styled.button`
+const StyledCancelIconContainer = styled.div`
   border: none;
   padding: 0;
   background: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const StyledCancelIcon = styled(Icon)<ChipProps>`
+  color: ${({ color, outlined }) => getCancelIconColor(color, outlined)};
 `;
