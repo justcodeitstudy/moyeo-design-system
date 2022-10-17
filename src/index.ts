@@ -9,5 +9,5 @@ export { TextInput } from "components/TextInput";
 export * from "./components/Modal";
 
 // theme
-export { default as GlobalStyle } from "styles/global";
-export { default as Theme } from "styles/theme";
+export { GlobalStyle } from "styles/global";
+export { Theme } from "styles/theme";
