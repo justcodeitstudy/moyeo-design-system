@@ -15,5 +15,5 @@ export { Tabs } from "./components/Tabs";
 export { TextInput } from "./components/TextInput";
 
 // theme
-export { GlobalStyle } from "./styles/global";
+export { default as GlobalStyle } from "./styles/global";
 export { Theme } from "./styles/theme";
