@@ -8,6 +8,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: Color;
   variants?: Variants;
   disabled?: boolean;
+  width?: string;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -16,6 +17,7 @@ export const Button = ({
   variants = "filled",
   disabled = false,
   onClick,
+  width,
   children,
   ...rest
 }: ButtonProps) => {
@@ -25,6 +27,7 @@ export const Button = ({
       variants={variants}
       disabled={disabled}
       onClick={onClick}
+      width={width}
       {...rest}
     >
       {children}
@@ -37,7 +40,7 @@ const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   position: relative;
-  min-width: 70px;
+  width: ${({ width }) => width};
   height: 40px;
   padding: 8px 16px;
   border-radius: 6px;
