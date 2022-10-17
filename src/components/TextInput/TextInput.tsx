@@ -32,7 +32,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <Container {...rest}>
+      <>
         {label && <StyledLabelText htmlFor={name}>{label}</StyledLabelText>}
         <StyledTextInputContainer>
           <StyledTextInput
@@ -44,6 +44,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             width={width}
             status={status}
             onChange={handleInput}
+            {...rest}
           />
         </StyledTextInputContainer>
         {message && (
@@ -51,12 +52,10 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             {message}
           </StyledDescriptionText>
         )}
-      </Container>
+      </>
     );
   },
 );
-
-const Container = styled("div")``;
 
 const StyledTextInputContainer = styled("div")`
   display: flex;
