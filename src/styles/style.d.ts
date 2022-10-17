@@ -1,9 +1,12 @@
 import "styled-components";
-import Theme from "./theme";
+import colors from "./theme/colors";
+import typography from "./theme/typography";
+import breakpoints from "./theme/breakpoints";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colors: typeof Theme.colors;
-    typography: typeof Theme.typography;
+    colors: typeof colors;
+    typography: typeof typography;
+    breakpoints: typeof breakpoints;
   }
 }
