@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import Theme from "../src/styles/theme";
-import GlobalStyle from "../src/styles/global";
+import { Theme } from "../src/styles/theme";
+import { GlobalStyle } from "../src/styles/global";
 
 export const decorators = [
   (Story) => (
