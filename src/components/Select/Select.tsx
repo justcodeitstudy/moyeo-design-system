@@ -20,7 +20,6 @@ export interface SelectProps<Multiple extends boolean = false> {
   children: React.ReactNode;
   inputProps?: TextInputProps;
   placeholder?: string;
-  renderInput?: (value: string[]) => React.ReactNode;
   onSelect?: (value: string) => void;
   onChange?: (value: Multiple extends true ? string[] : string) => void;
   onClose?: () => void;
@@ -31,7 +30,6 @@ export const Select = <Multiple extends boolean = false>({
   children,
   label,
   isMulti,
-  renderInput,
   value,
   onSelect,
   onChange,
@@ -197,7 +195,9 @@ export const Select = <Multiple extends boolean = false>({
       hasValue={!!value}
     >
       {inputContent}
-      <Icon name="down" />
+      <IconContainer>
+        <Icon name="down" size={24} />
+      </IconContainer>
     </StyledInputContainer>
   );
 
@@ -212,7 +212,6 @@ export const Select = <Multiple extends boolean = false>({
   return (
     <>
       {label && <StyledLabelText>{label}</StyledLabelText>}
-      {renderInput && Array.isArray(value) && renderInput(value)}
       <Popover
         isOpen={isOpen}
         anchorPosition={{
@@ -279,22 +278,11 @@ const StyledInputContainer = styled("div")<{
   }
 `;
 
-const IconContainer = styled("div")`
-  cursor: pointer;
-  display: inline-flex;
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-  transform-origin: 50%;
-  color: ${({ theme }) => theme.colors.text.secondary};
-`;
-
 const TextInputOverride = styled(TextInput)`
   ${({ theme }) => theme.typography.header4};
   border: none;
   padding: 0px;
+  width: 100vw;
 
   &:hover,
   &:focus,
@@ -322,3 +310,8 @@ const OptionList = styled("li")<{
 `;
 
 Select.Option = Option;
+
+const IconContainer = styled("div")`
+  display: flex;
+  align-items: center;
+`;

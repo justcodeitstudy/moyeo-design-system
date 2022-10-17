@@ -103,16 +103,9 @@ export const MultiSelect = () => {
   };
 
   return (
-    <SelectBase
-      isMulti
-      value={optionValues}
-      onSelect={handleSelectChange}
-      onChange={setOptionValues}
-      onClose={handleSelectClose}
-      placeholder="태그를 입력해주세요."
-      onSearchInputChange={handleSearchInputChange}
-      renderInput={(selected) =>
-        selected.map((value) => (
+    <>
+      {optionValues.map((value) => {
+        return (
           <Chip
             color="active"
             variants="pill"
@@ -120,15 +113,24 @@ export const MultiSelect = () => {
             onDelete={handleDelete}
             label={month.find((month) => month.value === value)?.label}
           />
-        ))
-      }
-    >
-      {optionList.length === 0 && <span>검색된 태그가 없습니다.</span>}
-      {optionList.map(({ value, label }) => (
-        <Option key={value} value={value}>
-          {label}
-        </Option>
-      ))}
-    </SelectBase>
+        );
+      })}
+      <SelectBase
+        isMulti
+        value={optionValues}
+        onSelect={handleSelectChange}
+        onChange={setOptionValues}
+        onClose={handleSelectClose}
+        placeholder="태그를 입력해주세요."
+        onSearchInputChange={handleSearchInputChange}
+      >
+        {optionList.length === 0 && <span>검색된 태그가 없습니다.</span>}
+        {optionList.map(({ value, label }) => (
+          <Option key={value} value={value}>
+            {label}
+          </Option>
+        ))}
+      </SelectBase>
+    </>
   );
 };
