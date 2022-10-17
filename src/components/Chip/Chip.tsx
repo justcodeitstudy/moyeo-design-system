@@ -1,4 +1,4 @@
-import { Icon } from "components/Icon";
+import { Icon } from "../Icon";
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 import {

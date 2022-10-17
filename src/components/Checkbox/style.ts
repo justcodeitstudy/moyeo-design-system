@@ -1,4 +1,4 @@
-import { Theme } from "styles/theme";
+import { Theme } from "../../styles/theme";
 import { Size } from "./Checkbox";
 
 export const getCheckboxSize = (boxSize: Size) => {

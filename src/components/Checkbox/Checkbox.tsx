@@ -5,7 +5,7 @@ import React, {
   ReactNode,
 } from "react";
 import styled from "styled-components";
-import { CheckboxIcon } from "Icon/svg";
+import { CheckboxIcon } from "../../Icon/svg";
 import { getCheckboxSize, getLabelSize } from "./style";
 
 export type Size = "medium" | "large" | "small";

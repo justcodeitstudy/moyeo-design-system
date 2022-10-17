@@ -7,10 +7,10 @@ import React, {
   useState,
 } from "react";
 import { Option, OptionProps } from "./Option";
-import { TextInput, TextInputProps } from "components/TextInput";
-import { Popover } from "components/Popover";
-import { isSameComponent, useResizeEffect } from "utils";
-import { Icon } from "components/Icon";
+import { TextInput, TextInputProps } from "../TextInput";
+import { Popover } from "../Popover";
+import { isSameComponent, useResizeEffect } from "../../utils";
+import { Icon } from "../Icon";
 
 export interface SelectProps<Multiple extends boolean = false> {
   value: Multiple extends true ? string[] : string;
