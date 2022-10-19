@@ -28,7 +28,6 @@ export const Option = forwardRef<HTMLUListElement, OptionProps>(
 
 const OptionContainer = styled("ul")<OptionProps>`
   display: flex;
-  height: 16px;
   align-items: center;
   position: relative;
   overflow: hidden;

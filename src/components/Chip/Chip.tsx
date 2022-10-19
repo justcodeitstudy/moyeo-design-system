@@ -29,7 +29,7 @@ const Chip = ({
   outlined,
   onClick,
   onDelete,
-  deleteIcon = <Icon name="cancel" />,
+  deleteIcon = <Icon name="cancel" size={14} />,
 }: ChipProps) => {
   const props = { color, variants, outlined };
 
