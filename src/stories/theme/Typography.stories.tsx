@@ -24,7 +24,7 @@ const generateTypography = (typography: string, font: Font) => {
           fontWeight={fontWeight}
           lineHeight={lineHeight}
         >
-          {typography.toUpperCase()}
+          {typography}
         </FontColumn>
         <FontColumn
           style={{ width: "400px" }}
