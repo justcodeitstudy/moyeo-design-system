@@ -21,7 +21,7 @@ const generatePalette = (entries: [string, string][], name: string) => {
   return (
     <>
       <Row>
-        <Column style={{ width: "300px" }}>Color</Column>
+        <Column width="300px">Color</Column>
         <Column>Naming</Column>
         <Column>Hex</Column>
         <Column>RGB</Column>
@@ -89,8 +89,8 @@ const Row = styled.div`
   gap: 50px;
 `;
 
-const Column = styled.div`
-  width: 100px;
+const Column = styled.div<{ width?: string }>`
+  width: ${({ width }) => (width ? width : "100px")};
   ${Theme.typography.md};
 `;
 

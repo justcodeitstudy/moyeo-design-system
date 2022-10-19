@@ -19,7 +19,7 @@ const generateTypography = (typography: string, font: Font) => {
     <>
       <Row key={typography}>
         <FontColumn
-          style={{ width: "120px" }}
+          width="120px"
           fontSize={fontSize}
           fontWeight={fontWeight}
           lineHeight={lineHeight}
@@ -27,7 +27,7 @@ const generateTypography = (typography: string, font: Font) => {
           {typography}
         </FontColumn>
         <FontColumn
-          style={{ width: "400px" }}
+          width="400px"
           fontSize={fontSize}
           fontWeight={fontWeight}
           lineHeight={lineHeight}
@@ -50,8 +50,8 @@ export const Typography: Story = () => {
     <>
       <Title>Pretendard</Title>
       <Row>
-        <Column style={{ width: "120px" }}>Type</Column>
-        <Column style={{ width: "400px" }}>Sample</Column>
+        <Column width="120px">Type</Column>
+        <Column width="400px">Sample</Column>
         <Column>Size</Column>
         <Column>Weight</Column>
         <Column>Line</Column>
@@ -90,12 +90,13 @@ const Row = styled.div`
   gap: 50px;
 `;
 
-const Column = styled.div`
-  width: 50px;
+const Column = styled.div<{ width?: string }>`
+  width: ${({ width }) => (width ? width : "50px")};
   ${Theme.typography.md};
 `;
 
-const FontColumn = styled.div<Font>`
+const FontColumn = styled.div<Font & { width?: string }>`
+  width: ${({ width }) => width || "auto"};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
   line-height: ${({ lineHeight }) => lineHeight};
