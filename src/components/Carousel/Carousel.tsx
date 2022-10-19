@@ -1,6 +1,7 @@
 import React, {
   Children,
   Fragment,
+  HTMLAttributes,
   ReactElement,
   ReactNode,
   useCallback,
@@ -15,13 +16,11 @@ import { carouselDrag } from "./utils/carouselDrag";
 
 export type IndicatorAlign = "left" | "center" | "right";
 
-export interface CarouselProps {
+export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   autoPlay?: boolean;
   autoPlayTime?: number;
   indicatorAlign?: IndicatorAlign;
-  width?: string;
-  height?: string;
 }
 
 interface CarouselStyledProps {
@@ -36,8 +35,7 @@ const Carousel = ({
   autoPlay = false,
   autoPlayTime = 3000,
   indicatorAlign = "left",
-  width = "100%",
-  height = "252px",
+  ...rest
 }: CarouselProps) => {
   const totalLength = Children.toArray(children).length + 2;
   const cloneChildren = Children.toArray(children);
@@ -140,7 +138,7 @@ const Carousel = ({
   }
 
   return (
-    <CarouselContents ref={contentsRef} width={width} height={height}>
+    <CarouselContents ref={contentsRef} {...rest}>
       <CarouselItems
         currentIndex={currentIndex}
         transitionEnabled={transitionEnabled}
@@ -176,13 +174,13 @@ const Carousel = ({
 
 export default Carousel;
 
-const CarouselContents = styled.div<{ width: string; height: string }>`
+const CarouselContents = styled.div`
   position: relative;
 
   overflow: hidden;
 
-  width: ${({ width }) => width && width};
-  height: ${({ height }) => height && height};
+  width: 100%;
+  height: 252px;
 
   cursor: pointer;
 `;
