@@ -32,7 +32,7 @@ const generatePalette = (entries: [string, string][], name: string) => {
           <Row key={hex}>
             <ColorColumn color={hex.toLowerCase()} />
             <Column>{`${name}${naming}`}</Column>
-            <Column>{hex}</Column>
+            <Column>{hex.toUpperCase()}</Column>
             <Column>{hexToRgb(hex)}</Column>
           </Row>
         );
