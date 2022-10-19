@@ -13,10 +13,6 @@ interface Font {
   lineHeight: string;
 }
 
-const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
 const generateTypography = (typography: string, font: Font) => {
   const { fontSize, fontWeight, lineHeight } = font;
   return (
@@ -28,7 +24,7 @@ const generateTypography = (typography: string, font: Font) => {
           fontWeight={fontWeight}
           lineHeight={lineHeight}
         >
-          {capitalize(typography)}
+          {typography.toUpperCase()}
         </FontColumn>
         <FontColumn
           style={{ width: "400px" }}
