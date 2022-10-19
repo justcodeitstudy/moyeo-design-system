@@ -2,11 +2,8 @@ import { createGlobalStyle, css } from "styled-components";
 
 const reset = css`
   * {
-    box-sizing: border-box;
-  }
-
-  body {
     font-family: Pretendard, sans-serif;
+    box-sizing: border-box;
   }
 
   html,
