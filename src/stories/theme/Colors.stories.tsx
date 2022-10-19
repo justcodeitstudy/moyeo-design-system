@@ -14,7 +14,7 @@ const hexToRgb = (hex: string) => {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
 
-  return r + ", " + g + ", " + b;
+  return `${r}, ${g}, ${b}`;
 };
 
 const generatePalette = (entries: [string, string][], name: string) => {
