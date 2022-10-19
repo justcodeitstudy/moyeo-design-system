@@ -22,9 +22,9 @@ export const getCheckboxSize = (boxSize: Size) => {
 
 export const getLabelSize = (boxSize: Size) => {
   const font = {
-    medium: { fontSize: Theme.typography.md.fontSize, marginLeft: 12 },
-    large: { fontSize: Theme.typography.lg.fontSize, marginLeft: 16 },
-    small: { fontSize: Theme.typography.md.fontSize, marginLeft: 12 },
+    medium: { fontSize: Theme.typography.md["font-size"], marginLeft: 12 },
+    large: { fontSize: Theme.typography.lg["font-size"], marginLeft: 16 },
+    small: { fontSize: Theme.typography.md["font-size"], marginLeft: 12 },
   };
 
   return font[boxSize];
