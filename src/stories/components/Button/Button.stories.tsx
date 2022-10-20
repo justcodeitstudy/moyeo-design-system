@@ -3,7 +3,6 @@ import React from "react";
 import { Button, ButtonProps } from "components/Button";
 import { Icon } from "components/Icon";
 import styled from "styled-components";
-import { Theme } from "styles/theme";
 
 export default {
   title: "Components/Button",
@@ -22,9 +21,6 @@ export const WithIcon = () => {
       <Button endIcon={<Icon name="write" size={24} />}>
         모집 글 작성하기
       </Button>
-      <StyledButton color="general">
-        <Icon name="checkWithCircle" color={Theme.colors.general[600]} />
-      </StyledButton>
       <Button startIcon={<Icon name="write" />}>모집 글 작성하기</Button>
     </Container>
   );
@@ -36,8 +32,4 @@ const Container = styled("div")`
   button {
     margin-right: 4px;
   }
-`;
-
-const StyledButton = styled(Button)`
-  padding: 8px;
 `;
