@@ -7,36 +7,25 @@ export default {
   title: "Theme/Typography",
 } as Meta;
 
-interface Font {
-  fontSize: string;
-  fontWeight: string;
-  lineHeight: string;
-}
+type FontProps = "font-size" | "font-weight" | "line-height";
+
+type Font = {
+  [key in FontProps]: string;
+};
 
 const generateTypography = (typography: string, font: Font) => {
-  const { fontSize, fontWeight, lineHeight } = font;
   return (
     <>
       <Row key={typography}>
-        <FontColumn
-          width="120px"
-          fontSize={fontSize}
-          fontWeight={fontWeight}
-          lineHeight={lineHeight}
-        >
+        <FontColumn width="120px" font={font}>
           {typography}
         </FontColumn>
-        <FontColumn
-          width="400px"
-          fontSize={fontSize}
-          fontWeight={fontWeight}
-          lineHeight={lineHeight}
-        >
+        <FontColumn width="400px" font={font}>
           다람쥐 헌 쳇바퀴에 타고파
         </FontColumn>
-        <Column>{fontSize}</Column>
-        <Column>{fontWeight}</Column>
-        <Column>{lineHeight}</Column>
+        <Column>{font["font-size"]}</Column>
+        <Column>{font["font-weight"]}</Column>
+        <Column>{font["line-height"]}</Column>
       </Row>
       <TypographyDivider />
     </>
@@ -95,9 +84,9 @@ const Column = styled.div<{ width?: string }>`
   ${Theme.typography.md};
 `;
 
-const FontColumn = styled.div<Font & { width?: string }>`
+const FontColumn = styled.div<{ font: Font; width?: string }>`
   width: ${({ width }) => width || "auto"};
-  font-size: ${({ fontSize }) => fontSize};
-  font-weight: ${({ fontWeight }) => fontWeight};
-  line-height: ${({ lineHeight }) => lineHeight};
+  font-size: ${({ font }) => font["font-size"]};
+  font-weight: ${({ font }) => font["font-weight"]};
+  line-height: ${({ font }) => font["line-height"]};
 `;
