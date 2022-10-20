@@ -1,5 +1,5 @@
 import { Icon } from "../Icon";
-import React, { ReactNode } from "react";
+import React, { HTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 import {
   getBackgroundColor,
@@ -10,7 +10,8 @@ import {
 
 export type Color = "basic" | "active" | "danger" | "warning";
 type Variants = "pill" | "rounded";
-export interface ChipProps {
+
+export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   color: Color;
   adornments?: ReactNode;
   label?: string;
@@ -30,6 +31,7 @@ const Chip = ({
   onClick,
   onDelete,
   deleteIcon = <Icon name="cancel" size={14} />,
+  ...rest
 }: ChipProps) => {
   const props = { color, variants, outlined };
 
@@ -44,7 +46,7 @@ const Chip = ({
   };
 
   return (
-    <StyledChip {...props} onClick={handleChipClick}>
+    <StyledChip {...props} {...rest} onClick={handleChipClick}>
       {adornments && <StyledChipAdornments>{adornments}</StyledChipAdornments>}
       <StyledChipLabel {...props}>{label}</StyledChipLabel>
       {onDelete && (
