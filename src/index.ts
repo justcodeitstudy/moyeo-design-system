@@ -13,6 +13,7 @@ export { Select } from "./components/Select";
 export { Switch } from "./components/Switch";
 export { Tabs } from "./components/Tabs";
 export { TextInput } from "./components/TextInput";
+export { Tooltip } from "./components/Tooltip";
 
 // theme
 export { GlobalStyle } from "./styles/global";
