@@ -221,20 +221,22 @@ export const Select = <Multiple extends boolean = false>({
   );
 
   return (
-    <StyledContainer>
+    <>
       {label && <StyledLabelText>{label}</StyledLabelText>}
-      <Popover
-        isOpen={isOpen}
-        anchorPosition={{
-          x: 0,
-          y: 4,
-        }}
-        onClose={closeOptionDrawer}
-        opener={select}
-      >
-        {optionDrawer}
-      </Popover>
-    </StyledContainer>
+      <PopoverContainer>
+        <Popover
+          isOpen={isOpen}
+          anchorPosition={{
+            x: 0,
+            y: 4,
+          }}
+          onClose={closeOptionDrawer}
+          opener={select}
+        >
+          {optionDrawer}
+        </Popover>
+      </PopoverContainer>
+    </>
   );
 };
 
@@ -243,7 +245,9 @@ const StyledLabelText = styled("label")`
   color: ${({ theme }) => theme.colors.text.primary};
 `;
 
-const StyledContainer = styled("div")``;
+const PopoverContainer = styled("div")`
+  margin-top: 4px;
+`;
 
 const StyledInputContainer = styled("div")<{
   active: boolean;
