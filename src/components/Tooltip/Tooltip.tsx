@@ -67,6 +67,7 @@ const TooltipContent = styled.div<TooltipContentProps>`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1000;
 
   opacity: 0;
   visibility: hidden;
