@@ -18,10 +18,8 @@ Default.args = {};
 export const WithIcon = () => {
   return (
     <Container>
-      <Button endIcon={<Icon name="write" size={24} />}>
-        모집 글 작성하기
-      </Button>
       <Button startIcon={<Icon name="write" />}>모집 글 작성하기</Button>
+      <Button endIcon={<Icon name="write" />}>모집 글 작성하기</Button>
     </Container>
   );
 };
