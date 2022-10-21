@@ -221,20 +221,22 @@ export const Select = <Multiple extends boolean = false>({
   );
 
   return (
-    <StyledContainer>
+    <>
       {label && <StyledLabelText>{label}</StyledLabelText>}
-      <Popover
-        isOpen={isOpen}
-        anchorPosition={{
-          x: 0,
-          y: 4,
-        }}
-        onClose={closeOptionDrawer}
-        opener={select}
-      >
-        {optionDrawer}
-      </Popover>
-    </StyledContainer>
+      <PopoverContainer>
+        <Popover
+          isOpen={isOpen}
+          anchorPosition={{
+            x: 0,
+            y: 4,
+          }}
+          onClose={closeOptionDrawer}
+          opener={select}
+        >
+          {optionDrawer}
+        </Popover>
+      </PopoverContainer>
+    </>
   );
 };
 
@@ -243,7 +245,9 @@ const StyledLabelText = styled("label")`
   color: ${({ theme }) => theme.colors.text.primary};
 `;
 
-const StyledContainer = styled("div")``;
+const PopoverContainer = styled("div")`
+  margin-top: 4px;
+`;
 
 const StyledInputContainer = styled("div")<{
   active: boolean;
@@ -257,11 +261,11 @@ const StyledInputContainer = styled("div")<{
   width: ${({ width }) => width};
   min-height: 22px;
   padding: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.general[300]};
+  outline: 1px solid ${({ theme }) => theme.colors.general[300]};
   border-radius: 4px;
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.general.white};
-  transition: border-color 0.2s ease-in-out;
+  transition: outline-color 0.2s ease-in-out;
 
   ${({ theme, disabled }) =>
     disabled &&
@@ -273,7 +277,7 @@ const StyledInputContainer = styled("div")<{
   ${({ theme, active }) =>
     active &&
     css`
-      border: 1px solid ${theme.colors.primary[600]};
+      outline: 1px solid ${theme.colors.primary[600]};
     `}
 
   ${({ hasValue, placeholder }) =>
@@ -289,7 +293,7 @@ const StyledInputContainer = styled("div")<{
     `};
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.colors.primary[300]};
+    outline: 1px solid ${({ theme }) => theme.colors.primary[300]};
   }
 `;
 
