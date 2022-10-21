@@ -67,6 +67,9 @@ const Indicators = styled.ul<{ indicatorAlign: IndicatorAlign }>`
       case "left":
         return css`
           left: 0;
+          @media (max-width: ${({ theme }) => `${theme.breakpoints.md}px`}) {
+            left: 16px;
+          }
         `;
       case "center":
         return css`
@@ -76,6 +79,9 @@ const Indicators = styled.ul<{ indicatorAlign: IndicatorAlign }>`
       case "right":
         return css`
           right: 0;
+          @media (max-width: ${({ theme }) => `${theme.breakpoints.md}px`}) {
+            right: 16px;
+          }
         `;
       default:
         return;
