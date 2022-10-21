@@ -259,7 +259,7 @@ const StyledInputContainer = styled("div")<{
   align-items: center;
   position: relative;
   width: ${({ width }) => width};
-  min-height: 20px;
+  min-height: 22px;
   padding: 12px;
   outline: 1px solid ${({ theme }) => theme.colors.general[300]};
   border-radius: 4px;
