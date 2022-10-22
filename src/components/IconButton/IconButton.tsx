@@ -38,7 +38,7 @@ const StyledIconButton = styled("button")`
   justify-content: center;
   position: relative;
   margin: 0;
-  padding: 9px;
+  padding: 6px;
   border-radius: 8px;
   display: inline-flex;
   overflow: hidden;
@@ -49,7 +49,6 @@ const StyledIconButton = styled("button")`
 
   &:disabled {
     pointer-events: none;
-    outline: none;
   }
 
   ${({ color }) => {
