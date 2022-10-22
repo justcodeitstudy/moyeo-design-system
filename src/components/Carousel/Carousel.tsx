@@ -28,6 +28,7 @@ interface CarouselStyledProps {
   contentsWidth: number;
   translateX: number;
   transitionEnabled: boolean;
+  totalLength: number;
 }
 
 const Carousel = ({
@@ -41,17 +42,22 @@ const Carousel = ({
   const cloneChildren = Children.toArray(children);
 
   const contentsRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
 
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [transitionEnabled, setTransitionEnabled] = useState<boolean>(false);
   const [newChildren, setNewChildren] = useState<ReactNode[]>([]);
   const [contentsWidth, setContentsWidth] = useState<number>(0);
+  const [itemWidth, setItemWidth] = useState<number>(0);
   const [translateX, setTranslate] = useState<number>(0);
   const [drag, setDrag] = useState<boolean>(false);
 
   const resizeContentsWidth = useCallback(() => {
     if (contentsRef.current) {
       setContentsWidth(contentsRef.current.clientWidth);
+    }
+    if (itemRef.current) {
+      setItemWidth(itemRef.current.clientWidth);
     }
   }, []);
 
@@ -69,7 +75,7 @@ const Carousel = ({
       return setCurrentIndex(0);
     }
     return setCurrentIndex((prevCurrentIndex) => prevCurrentIndex - 1);
-  }, [currentIndex, totalLength]);
+  }, [currentIndex]);
 
   const transitionEndHandler = useCallback(() => {
     setTransitionEnabled(false);
@@ -111,23 +117,18 @@ const Carousel = ({
         clearTimeout(playNextIndex);
       };
     }
-  }, [autoPlay, drag, autoPlayNextIndex]);
+  }, [autoPlay, drag, autoPlayNextIndex, autoPlayTime]);
 
   useEffect(() => {
     const cloneElement = cloneChildren.map((child) => {
-      return React.cloneElement(child as ReactElement, {
-        style: {
-          minWidth: "100%",
-          display: "inline-block",
-        },
-      });
+      return React.cloneElement(child as ReactElement, { ref: itemRef });
     });
     setNewChildren([
       cloneElement[cloneElement.length - 1],
       ...cloneElement,
       cloneElement[0],
     ]);
-  }, [totalLength]);
+  }, [contentsWidth]);
 
   const isServerSide = () => {
     return typeof window === "undefined";
@@ -145,6 +146,7 @@ const Carousel = ({
         contentsWidth={contentsWidth}
         translateX={translateX}
         onTransitionEnd={transitionEndHandler}
+        totalLength={totalLength}
         {...carouselDrag({
           contentsWidth,
           nextIndex,
@@ -159,15 +161,17 @@ const Carousel = ({
           <Fragment key={`carousel-${index}`}>{child}</Fragment>
         ))}
       </CarouselItems>
-      {totalLength > 1 && (
-        <CarouselIndicators
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-          totalLength={totalLength - 2}
-          indicatorAlign={indicatorAlign}
-          setTransitionEnabled={setTransitionEnabled}
-        />
-      )}
+      <CarouselIndicatorsWrapper itemWidth={itemWidth}>
+        {totalLength > 1 && (
+          <CarouselIndicators
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+            totalLength={totalLength - 2}
+            indicatorAlign={indicatorAlign}
+            setTransitionEnabled={setTransitionEnabled}
+          />
+        )}
+      </CarouselIndicatorsWrapper>
     </CarouselContents>
   );
 };
@@ -186,8 +190,15 @@ const CarouselContents = styled.div`
 `;
 
 const CarouselItems = styled.div.attrs<CarouselStyledProps>(
-  ({ currentIndex, contentsWidth, translateX, transitionEnabled }) => ({
+  ({
+    currentIndex,
+    contentsWidth,
+    translateX,
+    transitionEnabled,
+    totalLength,
+  }) => ({
     style: {
+      width: `${contentsWidth * totalLength}px`,
       transform: `translate3D(${
         -currentIndex * contentsWidth + translateX
       }px, 0px, 0px)`,
@@ -205,4 +216,10 @@ const CarouselItems = styled.div.attrs<CarouselStyledProps>(
   padding: 0;
 
   user-select: none;
+`;
+
+const CarouselIndicatorsWrapper = styled.div<{ itemWidth: number }>`
+  width: ${({ itemWidth }) => (itemWidth ? `${itemWidth}px` : "1220px")};
+  margin: 0 auto;
+  position: relative;
 `;
