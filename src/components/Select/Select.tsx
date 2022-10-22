@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { Option, OptionProps } from "./Option";
-import { TextInput, TextInputProps } from "../TextInput";
+import { TextInputProps } from "../TextInput";
 import { Popover } from "../Popover";
 import { isSameComponent, useResizeEffect } from "../../utils";
 import { Icon } from "../Icon";
@@ -287,7 +287,6 @@ const StyledInputContainer = styled("div")<{
       &:before {
         content: attr(placeholder);
         white-space: nowrap;
-        width: 100%;
         color: ${({ theme }) => theme.colors.text.secondary};
       }
     `};
@@ -297,11 +296,11 @@ const StyledInputContainer = styled("div")<{
   }
 `;
 
-const TextInputOverride = styled(TextInput)`
+const TextInputOverride = styled("input")`
   ${({ theme }) => theme.typography.header4};
   border: none;
   padding: 0px;
-  width: 100vw;
+  flex: 1 1 0;
 
   &:hover,
   &:focus,
