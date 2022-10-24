@@ -1,4 +1,7 @@
+// Icons
 export { ArrowIcon, CancelIcon, CheckboxIcon, SearchIcon } from "./Icon/svg";
+
+// Components
 export { Accordion } from "./components/Accordion";
 export { Button } from "./components/Button";
 export { Card } from "./components/Card";
@@ -15,6 +18,6 @@ export { Tabs } from "./components/Tabs";
 export { TextInput } from "./components/TextInput";
 export { Tooltip } from "./components/Tooltip";
 
-// theme
+// Theme
 export { GlobalStyle } from "./styles/global";
 export { Theme } from "./styles/theme";
