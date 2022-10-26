@@ -298,6 +298,7 @@ const StyledInputContainer = styled("div")<{
 
 const TextInputOverride = styled("input")`
   ${({ theme }) => theme.typography.header4};
+  width: 0;
   border: none;
   padding: 0px;
   flex: 1 1 0;
