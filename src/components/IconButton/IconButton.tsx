@@ -13,7 +13,7 @@ export interface IconButtonProps
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const IconButton = ({
+const IconButton = ({
   color = "general",
   disabled,
   icon,
@@ -32,6 +32,8 @@ export const IconButton = ({
     </StyledIconButton>
   );
 };
+
+export default IconButton;
 
 const StyledIconButton = styled("button")`
   align-items: center;
