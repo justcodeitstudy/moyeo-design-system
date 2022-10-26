@@ -9,6 +9,7 @@ export { Carousel } from "./components/Carousel";
 export { Checkbox } from "./components/Checkbox";
 export { Chip } from "./components/Chip";
 export { Icon } from "./components/Icon";
+export { IconButton } from "./components/IconButton";
 export { Modal } from "./components/Modal";
 export { Popover } from "./components/Popover";
 export { SearchInput } from "./components/SearchInput";
