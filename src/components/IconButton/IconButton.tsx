@@ -1,4 +1,4 @@
-import { Icon, IconName } from "components/Icon";
+import { Icon, IconName } from "../Icon";
 import React, { ButtonHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 
