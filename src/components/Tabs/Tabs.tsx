@@ -51,6 +51,8 @@ export const Item = ({
 Tabs.Item = Item;
 
 const StyledTabs = styled.ul`
+  width: max-content;
+  overflow-x: scroll;
   padding: 0;
   margin: 0;
   flex: 1;
@@ -73,5 +75,9 @@ const StyledItem = styled.li<TabsItemProps>`
   &:hover {
     color: ${({ theme, selected }) =>
       selected ? theme.colors.primary[500] : theme.colors.text.primary};
+  }
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    ${({ theme }) => theme.typography.md};
   }
 `;
