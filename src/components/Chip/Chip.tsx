@@ -17,6 +17,7 @@ export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   variants?: Variants;
   outlined?: boolean;
+  disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onDelete?: (e: React.MouseEvent<HTMLDivElement>, label?: string) => void;
   deleteIcon?: React.ReactNode;
@@ -28,12 +29,13 @@ const Chip = ({
   color = "basic",
   variants,
   outlined,
+  disabled,
   onClick,
   onDelete,
   deleteIcon = <Icon name="cancel" size={14} />,
   ...rest
 }: ChipProps) => {
-  const props = { color, variants, outlined };
+  const props = { color, variants, outlined, disabled };
 
   const handleChipClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
