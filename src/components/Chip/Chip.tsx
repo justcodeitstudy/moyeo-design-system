@@ -76,12 +76,14 @@ const StyledChip = styled.div<ChipProps>`
   border-radius: ${({ variants }) =>
     variants === "pill" ? `${26 / 2}px` : "6px"};
 
-  border: ${({ color, outlined }) =>
-    `1px solid ${getBorderColor(color, outlined)}`};
+  border: ${({ color, outlined, disabled }) =>
+    `1px solid ${getBorderColor(color, outlined, disabled)}`};
 
-  color: ${({ color, outlined }) => getColor(color, outlined)};
+  color: ${({ color, outlined, disabled }) =>
+    getColor(color, outlined, disabled)};
 
-  background: ${({ color, outlined }) => getBackgroundColor(color, outlined)};
+  background: ${({ color, outlined, disabled }) =>
+    getBackgroundColor(color, outlined, disabled)};
 
   gap: 2px;
 `;
@@ -89,7 +91,8 @@ const StyledChip = styled.div<ChipProps>`
 const StyledChipLabel = styled.span<ChipProps>`
   ${({ theme }) => theme.typography.sm};
 
-  color: ${({ color, outlined }) => getColor(color, outlined)};
+  color: ${({ color, outlined, disabled }) =>
+    getColor(color, outlined, disabled)};
 `;
 
 const StyledChipAdornments = styled.span`
@@ -107,6 +110,7 @@ const StyledCancelIconContainer = styled.div<ChipProps>`
   cursor: pointer;
 
   svg {
-    color: ${({ color, outlined }) => getCancelIconColor(color, outlined)};
+    color: ${({ color, outlined, disabled }) =>
+      getCancelIconColor(color, outlined, disabled)};
   }
 `;
