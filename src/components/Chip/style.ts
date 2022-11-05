@@ -14,14 +14,7 @@ const getOutLineColor = (color: Color) => {
   }
 };
 
-export const getBorderColor = (
-  color: Color,
-  outlined?: boolean,
-  disabled?: boolean,
-) => {
-  if (disabled) {
-    return Theme.colors.general["200"];
-  }
+export const getBorderColor = (color: Color, outlined?: boolean) => {
   if (color === "basic") {
     return Theme.colors.general["300"];
   }
@@ -31,14 +24,7 @@ export const getBorderColor = (
   return "none";
 };
 
-export const getColor = (
-  color: Color,
-  outlined?: boolean,
-  disabled?: boolean,
-) => {
-  if (disabled) {
-    return Theme.colors.text["disabled"];
-  }
+export const getColor = (color: Color, outlined?: boolean) => {
   if (color === "basic") {
     return Theme.colors.general["600"];
   }
@@ -48,25 +34,14 @@ export const getColor = (
   return "#fff";
 };
 
-export const getBackgroundColor = (
-  color: Color,
-  outlined?: boolean,
-  disabled?: boolean,
-) => {
-  if (outlined || disabled) {
+export const getBackgroundColor = (color: Color, outlined?: boolean) => {
+  if (outlined) {
     return "#fff";
   }
   return getOutLineColor(color);
 };
 
-export const getCancelIconColor = (
-  color: Color,
-  outlined?: boolean,
-  disabled?: boolean,
-) => {
-  if (disabled) {
-    return Theme.colors.general["200"];
-  }
+export const getCancelIconColor = (color: Color, outlined?: boolean) => {
   if (outlined) {
     switch (color) {
       case "active":
