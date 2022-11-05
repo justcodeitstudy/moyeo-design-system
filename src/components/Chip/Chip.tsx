@@ -1,6 +1,6 @@
 import { Icon } from "../Icon";
 import React, { HTMLAttributes, ReactNode } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   getBackgroundColor,
   getBorderColor,
@@ -76,20 +76,27 @@ const StyledChip = styled.div<ChipProps>`
   border-radius: ${({ variants }) =>
     variants === "pill" ? `${26 / 2}px` : "6px"};
 
-  border: ${({ color, outlined }) =>
-    `1px solid ${getBorderColor(color, outlined)}`};
-
-  color: ${({ color, outlined }) => getColor(color, outlined)};
-
-  background: ${({ color, outlined }) => getBackgroundColor(color, outlined)};
-
+  ${({ color, outlined, disabled, theme }) => {
+    return disabled
+      ? css`
+          border: 1px solid ${theme.colors.general["200"]};
+          color: ${theme.colors.text["disabled"]};
+          background: #ffffff;
+        `
+      : css`
+          border: 1px solid ${getBorderColor(color, outlined)};
+          color: ${getColor(color, outlined)};
+          background: ${getBackgroundColor(color, outlined)};
+        `;
+  }}
   gap: 2px;
 `;
 
 const StyledChipLabel = styled.span<ChipProps>`
   ${({ theme }) => theme.typography.sm};
 
-  color: ${({ color, outlined }) => getColor(color, outlined)};
+  color: ${({ color, outlined, disabled, theme }) =>
+    disabled ? theme.colors.text["disabled"] : getColor(color, outlined)};
 `;
 
 const StyledChipAdornments = styled.span`
@@ -107,6 +114,9 @@ const StyledCancelIconContainer = styled.div<ChipProps>`
   cursor: pointer;
 
   svg {
-    color: ${({ color, outlined }) => getCancelIconColor(color, outlined)};
+    color: ${({ color, outlined, disabled, theme }) =>
+      disabled
+        ? theme.colors.text["disabled"]
+        : getCancelIconColor(color, outlined)};
   }
 `;
