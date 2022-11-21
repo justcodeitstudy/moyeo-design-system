@@ -33,6 +33,7 @@ export interface PopoverProps {
   };
   children: ReactNode;
   opener: PopoverOpenerType;
+  maxHeight?: number;
 }
 
 export type PopoverOpenerType = FunctionComponentElement<{
@@ -62,6 +63,7 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
       y: 0,
     },
     opener,
+    maxHeight,
   }) {
     const contentRef = useRef<HTMLDivElement | null>(null);
     const anchorRef = useRef<HTMLElement | null>(null);
@@ -86,6 +88,7 @@ export const Popover = forwardRef<ObservedRefType, PopoverProps>(
       contentRef.current.style.top = y + "px";
       contentRef.current.style.opacity = "1";
       contentRef.current.style.transform = "scale(1)";
+      contentRef.current.style.maxHeight = `${maxHeight}px`;
     };
 
     useEffect(() => renderContentRect(), [isOpen]);

@@ -13,7 +13,7 @@ import { isSameComponent, useResizeEffect } from "../../utils";
 import { Icon } from "../Icon";
 
 export interface SelectProps<Multiple extends boolean = false> {
-  value: Multiple extends true ? string[] : string;
+  value: Multiple extends true ? any[] : any;
   isMulti?: Multiple;
   label?: string;
   disabled?: boolean;
@@ -21,10 +21,11 @@ export interface SelectProps<Multiple extends boolean = false> {
   inputProps?: TextInputProps;
   placeholder?: string;
   width?: string;
-  onSelect?: (value: string) => void;
-  onChange?: (value: Multiple extends true ? string[] : string) => void;
+  onSelect?: (value: any) => void;
+  onChange?: (value: Multiple extends true ? any[] : any) => void;
   onClose?: () => void;
   onSearchInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxHeight?: number;
 }
 
 export const Select = <Multiple extends boolean = false>({
@@ -40,6 +41,7 @@ export const Select = <Multiple extends boolean = false>({
   disabled = false,
   placeholder,
   width,
+  maxHeight,
 }: SelectProps<Multiple>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -225,6 +227,7 @@ export const Select = <Multiple extends boolean = false>({
       {label && <StyledLabelText>{label}</StyledLabelText>}
       <PopoverContainer>
         <Popover
+          maxHeight={maxHeight}
           isOpen={isOpen}
           anchorPosition={{
             x: 0,
